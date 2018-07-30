@@ -7,6 +7,9 @@ public class CaptureZoneActor : MonoBehaviour {
 
     public enum Owner { none, team1, team2};
 
+    bool partialCaptureTeam1;
+    bool partialCaptureTeam2;
+
     public float capturePercentage;
 
     public Owner owner;
@@ -44,7 +47,10 @@ public class CaptureZoneActor : MonoBehaviour {
 
         if(team1Tanks.Count > 0 && team2Tanks.Count == 0)
         {
-            capturePercentage = 0;
+            if (partialCaptureTeam2)
+            {
+                capturePercentage = 0;
+            }
 
             if (owner == Owner.none)
             {
@@ -52,6 +58,8 @@ public class CaptureZoneActor : MonoBehaviour {
 
                 if (captureTimer <= 0)
                 {
+                    partialCaptureTeam1 = true;
+                    partialCaptureTeam2 = false;
                     capturePercentage += 10;
                     captureTimer = captureTime;
 
@@ -79,12 +87,19 @@ public class CaptureZoneActor : MonoBehaviour {
 
         if (team2Tanks.Count > 0 && team1Tanks.Count == 0)
         {
+            if (partialCaptureTeam1)
+            {
+                capturePercentage = 0;
+            }
+
             if (owner == Owner.none)
             {
                 captureTimer -= Time.deltaTime;
 
                 if (captureTimer <= 0)
                 {
+                    partialCaptureTeam1 = false;
+                    partialCaptureTeam2 = true;
                     capturePercentage += 10;
                     captureTimer = captureTime;
 
@@ -124,8 +139,7 @@ public class CaptureZoneActor : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other) {
 
         if (other.GetComponent<TankActor>().m_team1unit)
         {
