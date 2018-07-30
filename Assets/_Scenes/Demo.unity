@@ -1216,6 +1216,8 @@ GameObject:
   - component: {fileID: 1725922464}
   - component: {fileID: 1725922467}
   - component: {fileID: 1725922468}
+  - component: {fileID: 1725922470}
+  - component: {fileID: 1725922469}
   m_Layer: 0
   m_Name: Zone
   m_TagString: Untagged
@@ -1250,7 +1252,7 @@ MonoBehaviour:
   capturePercentage: 0
   owner: 0
   captureTimer: 0
-  captureTime: 10
+  captureTime: 1
 --- !u!135 &1725922465
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1284,7 +1286,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3e2c9a935e590d7459512d329c3d91ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1327,6 +1329,40 @@ MonoBehaviour:
   m_shrinkingBuffer: 1
   m_growingBuffer: 1
   m_resetingBuffer: 0.1
+--- !u!114 &1725922469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1725922462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce614f93dd3af144c82fd49a2a9b1675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_originalColor: {r: 0, g: 0, b: 0, a: 0}
+  m_newColor: {r: 0, g: 1, b: 0, a: 1}
+  m_colorCycleSpeed: 2
+  m_affectedMaterials: []
+--- !u!114 &1725922470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1725922462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f55e4887181c23479d656b940f7555a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_teamColors:
+  - {r: 1, g: 1, b: 1, a: 0.09803922}
+  - {r: 1, g: 1, b: 1, a: 0.39215687}
+  - {r: 0, g: 1, b: 0, a: 0.19607843}
+  - {r: 1, g: 0, b: 0, a: 0.19607843}
+  m_captureZoneActor: {fileID: 0}
+  m_changeColor: {fileID: 0}
+  m_progress: 0
 --- !u!4 &1774381736 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4840223350431824, guid: 3c2bd458968ea5647bd0ed06d381e3d4,

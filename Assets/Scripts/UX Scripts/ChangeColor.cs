@@ -17,7 +17,7 @@ public class ChangeColor : MonoBehaviour {
         m_affectedMaterials.Add(GetComponent<MeshRenderer>().material);
         foreach (MeshRenderer mr in mrs)
         {
-            for (int i = mr.materials.Length + 1; i >= 0; i--)
+            for (int i = mr.materials.Length -1; i >= 0; i--)
             {
                 m_affectedMaterials.Add(mr.materials[i]);
             }
