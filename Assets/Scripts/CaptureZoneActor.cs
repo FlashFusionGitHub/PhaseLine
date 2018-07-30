@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CaptureZoneActor : MonoBehaviour {
 
-    public enum Owner { none, team1, team2 };
+    public enum Owner { none, team1, team2};
 
     public float capturePercentage;
 
@@ -24,13 +25,27 @@ public class CaptureZoneActor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(capturePercentage == 0)
+        foreach(TankActor tank in team1Tanks.ToList())
+        {
+            if(tank == null)
+                team1Tanks.Remove(tank);
+        }
+
+        foreach (TankActor tank in team2Tanks.ToList())
+        {
+            if(tank == null)
+                team2Tanks.Remove(tank);
+        }
+
+        if (capturePercentage == 0)
         {
             owner = Owner.none;
         }
 
         if(team1Tanks.Count > 0 && team2Tanks.Count == 0)
         {
+            capturePercentage = 0;
+
             if (owner == Owner.none)
             {
                 captureTimer -= Time.deltaTime;
@@ -98,12 +113,12 @@ public class CaptureZoneActor : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 
-        if(other.GetComponent<TankActor>().m_team1unit && other.GetComponent<TankActor>().m_isGeneral)
+        if(other.GetComponent<TankActor>().m_team1unit)
         {
             team1Tanks.Add(other.GetComponent<TankActor>());
         }
 
-        if (other.GetComponent<TankActor>().m_team2unit && other.GetComponent<TankActor>().m_isGeneral)
+        if (other.GetComponent<TankActor>().m_team2unit)
         {
             team2Tanks.Add(other.GetComponent<TankActor>());
         }
@@ -112,12 +127,12 @@ public class CaptureZoneActor : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
 
-        if (other.GetComponent<TankActor>().m_team1unit && other.GetComponent<TankActor>().m_isGeneral)
+        if (other.GetComponent<TankActor>().m_team1unit)
         {
             team1Tanks.Remove(other.GetComponent<TankActor>());
         }
 
-        if (other.GetComponent<TankActor>().m_team2unit && other.GetComponent<TankActor>().m_isGeneral)
+        if (other.GetComponent<TankActor>().m_team2unit)
         {
             team2Tanks.Remove(other.GetComponent<TankActor>());
         }

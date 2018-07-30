@@ -18,7 +18,7 @@ public class TankActor : MonoBehaviour {
 
     //tanks health
     public float m_starthealth = 100;
-    private float m_health;
+    public float m_health;
 
     //tanks attack time
     public float m_AttackTime;
@@ -47,20 +47,15 @@ public class TankActor : MonoBehaviour {
         {
             foreach (TankActor tank in FindObjectsOfType<TankActor>())
             {
-                if (tank.m_team2unit)
+                if (tank.m_team2unit && Vector3.Distance(transform.position, tank.transform.position) <= 20 &&
+                    tank.m_health >= 0)
                 {
-                    if (Vector3.Distance(transform.position, tank.transform.position) <= 20)
-                    {
-                        if (tank.m_health >= 0)
-                        {
-                            m_AttackTimer -= Time.deltaTime;
+                    m_AttackTimer -= Time.deltaTime;
 
-                            if (m_AttackTimer <= 0.0f)
-                            {
-                                tank.TakeDamage(20);
-                                m_AttackTimer = m_AttackTime;
-                            }
-                        }
+                    if (m_AttackTimer <= 0.0f)
+                    {
+                        tank.TakeDamage(20);
+                        m_AttackTimer = m_AttackTime;
                     }
                 }
             }
@@ -70,20 +65,15 @@ public class TankActor : MonoBehaviour {
         {
             foreach (TankActor tank in FindObjectsOfType<TankActor>())
             {
-                if (tank.m_team1unit)
+                if (tank.m_team1unit && Vector3.Distance(transform.position, tank.transform.position) <= 20 &&
+                    tank.m_health >= 0)
                 {
-                    if (Vector3.Distance(transform.position, tank.transform.position) <= 20)
-                    {
-                        if (tank.m_health >= 0)
-                        {
-                            m_AttackTimer -= Time.deltaTime;
+                    m_AttackTimer -= Time.deltaTime;
 
-                            if (m_AttackTimer <= 0.0f)
-                            {
-                                tank.TakeDamage(20);
-                                m_AttackTimer = m_AttackTime;
-                            }
-                        }
+                    if (m_AttackTimer <= 0.0f)
+                    {
+                        tank.TakeDamage(20);
+                        m_AttackTimer = m_AttackTime;
                     }
                 }
             }
