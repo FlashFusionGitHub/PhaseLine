@@ -124,6 +124,11 @@ public class CaptureZoneActor : MonoBehaviour {
                 return;
             }
         }
+
+        if(team1Tanks.Count == 0 && team2Tanks.Count == 0 && owner == Owner.none)
+        {
+            capturePercentage = 0;
+        }
 	}
 
     private void OnTriggerEnter(Collider other) {
