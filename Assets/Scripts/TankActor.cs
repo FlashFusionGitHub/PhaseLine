@@ -89,8 +89,6 @@ public class TankActor : MonoBehaviour {
     {
         m_health -= damageAmount;
 
-        Debug.Log(m_health);
-
         m_healthBar.fillAmount = m_health / m_starthealth;
     }
 
