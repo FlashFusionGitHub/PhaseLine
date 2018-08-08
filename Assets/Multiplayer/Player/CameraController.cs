@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(player == Player.None)
+        if(player == Player.NONE)
             player = GetComponentInParent<UnitManager>().player;
 
         if (changePosition == false)

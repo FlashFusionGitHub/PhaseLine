@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum Player { None, Player1, Player2 }
+public enum team { TEAM1, TEAM2 };
+public enum Player { NONE, PLAYER1, PLAYER2 }
 
 public class UnitManager : MonoBehaviour {
 
