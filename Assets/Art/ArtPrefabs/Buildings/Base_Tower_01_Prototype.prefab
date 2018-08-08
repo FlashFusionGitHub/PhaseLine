@@ -70,6 +70,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4496605166211304}
+  - component: {fileID: 208206223463520834}
   m_Layer: 0
   m_Name: Base_Tower_01_Prototype
   m_TagString: Untagged
@@ -229,8 +230,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1528873060345224}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000029504295}
-  m_LocalPosition: {x: 4.39, y: 1.3751181, z: 61.89}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.000002473592}
+  m_LocalPosition: {x: -2.007454, y: -10.279293, z: 40.470596}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4292104270718588}
@@ -543,3 +544,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1791409452156962}
   m_Mesh: {fileID: 4300012, guid: ae36d4a50ecf0ce4896192b3068cbfa3, type: 3}
+--- !u!208 &208206223463520834
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1528873060345224}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 2.8, y: 6.18, z: 2.8}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 3.11, z: 0.76}
+  m_TimeToStationary: 0.5

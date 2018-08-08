@@ -141,9 +141,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1003186968663844}
-  m_LocalRotation: {x: -0, y: -0.99997705, z: -0, w: -0.006777788}
-  m_LocalPosition: {x: -13.139653, y: -10.374412, z: 57.4976}
-  m_LocalScale: {x: 0.42024165, y: 0.42024094, z: 0.42024165}
+  m_LocalRotation: {x: -0, y: -0.99998957, z: -0, w: 0.0045697982}
+  m_LocalPosition: {x: -8.181263, y: -10.374412, z: 57.461437}
+  m_LocalScale: {x: 0.42024142, y: 0.42024094, z: 0.42024142}
   m_Children:
   - {fileID: 4489970562769060}
   - {fileID: 4965629519006420}
@@ -151,7 +151,7 @@ Transform:
   - {fileID: 4608360256558898}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180.777, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -179.47601, z: 0}
 --- !u!4 &4965629519006420
 Transform:
   m_ObjectHideFlags: 1
@@ -358,7 +358,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 4489970562769060}
   lastSpawnedObject: {fileID: 0}
   disBeforeNextSpawn: 5
-  spawnWaiting: 1
+  spawnWaiting: 0
   m_hangerDoors:
   - m_hangerDoor: {fileID: 4965629519006420}
     m_openPos: {x: -1.5, y: 0, z: 0}

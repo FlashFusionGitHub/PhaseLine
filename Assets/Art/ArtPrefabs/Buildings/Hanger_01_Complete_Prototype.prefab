@@ -441,7 +441,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 4671675821822734}
   lastSpawnedObject: {fileID: 0}
   disBeforeNextSpawn: 5
-  spawnWaiting: 1
+  spawnWaiting: 0
   m_hangerDoors:
   - m_hangerDoor: {fileID: 4663816880432452}
     m_openPos: {x: 4, y: 4.6, z: 4}
