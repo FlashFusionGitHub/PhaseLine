@@ -45,7 +45,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!1 &1808069062374852
 GameObject:
@@ -61,7 +61,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4157001788867260
 Transform:
@@ -96,14 +96,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382282715178618}
-  m_LocalRotation: {x: -0, y: -0.66672844, z: -0, w: 0.7453008}
-  m_LocalPosition: {x: 202.3, y: 16.8, z: 45.6}
-  m_LocalScale: {x: 2.0501127, y: 33.7395, z: 2.050114}
+  m_LocalRotation: {x: -0, y: -0.7132377, z: -0, w: -0.7009223}
+  m_LocalPosition: {x: 211.5, y: 24.481901, z: 64.348}
+  m_LocalScale: {x: 4.2274976, y: 69.57356, z: 4.2275066}
   m_Children:
   - {fileID: 4157001788867260}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -83.630005, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -269.002, z: 0}
 --- !u!23 &23414828906441832
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -125,7 +125,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -221,7 +221,7 @@ Light:
   m_Type: 0
   m_Color: {r: 1, g: 0.7653144, b: 0.3455882, a: 1}
   m_Intensity: 36.7
-  m_Range: 37.05
+  m_Range: 62.922268
   m_SpotAngle: 45
   m_CookieSize: 10
   m_Shadows:
