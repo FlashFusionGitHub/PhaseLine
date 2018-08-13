@@ -43,7 +43,10 @@ public class TankActor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(m_team1unit)
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
+        if (m_team1unit)
         {
             foreach (TankActor tank in FindObjectsOfType<TankActor>())
             {

@@ -23,6 +23,9 @@ public class SquadController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
         if (m_squad.Count > 0)
         {
             foreach (TankActor tank in m_squad.ToList())

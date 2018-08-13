@@ -9,7 +9,7 @@ public enum Player { NONE, PLAYER1, PLAYER2 }
 
 public class UnitManager : MonoBehaviour {
 
-    //private InputDevice m_controller;
+    private InputDevice m_controller;
     private GameObject m_currentSelectionCircle;
     private int m_squadIndex = 0;
 
@@ -28,7 +28,7 @@ public class UnitManager : MonoBehaviour {
 
     private void Awake()
     {
-        //m_controller = InputManager.Devices[0];
+        m_controller = InputManager.Devices[0];
     }
 
     // Use this for initialization
@@ -36,7 +36,7 @@ public class UnitManager : MonoBehaviour {
 
         m_squads = GetComponentsInChildren<SquadController>().ToList();
 
-        //SelectedTank(m_squadIndex);
+        SelectedTank(m_squadIndex);
     }
 	
 	// Update is called once per frame
@@ -55,10 +55,10 @@ public class UnitManager : MonoBehaviour {
                 }
             }
 
-            //if(m_squads[m_squadIndex].m_currentGeneral != null && allGroundUnitsSelected == false)
-            //    m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
+            if(m_squads[m_squadIndex].m_currentGeneral != null && allGroundUnitsSelected == false)
+                m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
 
-            /*if (m_controller.Action1.WasPressed)
+            if (m_controller.Action1.WasPressed)
             {
                 if(allGroundUnitsSelected != true)
                 {
@@ -93,9 +93,9 @@ public class UnitManager : MonoBehaviour {
             {
                 m_camera.changePosition = true;
 
-                if (player == Player.Player1)
+                if (player == Player.PLAYER1)
                     m_camera.MoveCameraTo(m_navigationMarker.transform.position.x, m_navigationMarker.transform.position.z - 10);
-                if (player == Player.Player2)
+                if (player == Player.PLAYER2)
                     m_camera.MoveCameraTo(m_navigationMarker.transform.position.x, m_navigationMarker.transform.position.z + 10);
             }
 
@@ -168,7 +168,7 @@ public class UnitManager : MonoBehaviour {
             if (m_controller.Action4.WasPressed && !allGroundUnitsSelected)
             {
                 SelectAllTanks();
-            }*/
+            }
         } 
         else
         {
@@ -176,7 +176,7 @@ public class UnitManager : MonoBehaviour {
         }
 	}
 
-    /*void SelectedTank(int index)
+    void SelectedTank(int index)
     {
         foreach(TankActor tank in m_squads[index].m_squad)
         {
@@ -188,7 +188,7 @@ public class UnitManager : MonoBehaviour {
         m_camera.changePosition = true;
 
         m_camera.MoveCameraTo(m_squads[index].m_currentGeneral.transform.position.x, m_squads[index].m_currentGeneral.transform.position.z - 10);
-    }*/
+    }
 
     void SelectAllTanks()
     {

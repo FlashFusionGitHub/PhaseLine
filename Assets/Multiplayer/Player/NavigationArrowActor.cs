@@ -19,7 +19,7 @@ public class NavigationArrowActor : MonoBehaviour {
 
     private void Awake()
     {
-        //m_controller = InputManager.Devices[0];
+        m_controller = InputManager.Devices[0];
     }
 
     // Use this for initialization
@@ -33,12 +33,12 @@ public class NavigationArrowActor : MonoBehaviour {
         if (player == Player.NONE)
             player = GetComponentInParent<UnitManager>().player;
 
-        /*if(player == Player.Player1)
+        if(player == Player.PLAYER1)
         {
             transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) / markerSpeed;
         }
 
-        if (player == Player.Player2)
+        if (player == Player.PLAYER2)
         {
             transform.position += new Vector3(-m_controller.LeftStickX, 0, -m_controller.LeftStickY) / markerSpeed;
         }
@@ -46,7 +46,7 @@ public class NavigationArrowActor : MonoBehaviour {
         float markerXPos = Mathf.Clamp(transform.position.x, m_MinXPos, m_MaxXPos);
         float markerZPos = Mathf.Clamp(transform.position.z, m_MinZPos, m_MaxZPos);
 
-        transform.position = new Vector3(markerXPos, transform.position.y, markerZPos);*/
+        transform.position = new Vector3(markerXPos, transform.position.y, markerZPos);
     }
 
     public TankActor GetEnemyToAttack()

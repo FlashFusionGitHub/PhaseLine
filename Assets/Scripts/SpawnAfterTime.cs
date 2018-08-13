@@ -34,6 +34,10 @@ public class SpawnAfterTime : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
+
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
         if (spawnerState == SpawnerStates.waiting)
         {
             timeBeforeSpawnStart -= Time.deltaTime;

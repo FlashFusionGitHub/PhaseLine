@@ -15,18 +15,18 @@ public class NavigationArrowActorP1 : MonoBehaviour {
 
     public int markerSpeed = 2;
 
-    private void Awake()
-    {
-        m_controller = InputManager.Devices[0];
-    }
-
     // Use this for initialization
     void Start () {
-		
-	}
+
+        m_controller = GetComponent<CheckControllers>().m_controller_1;
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
         transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) / markerSpeed;
 
         float markerXPos = Mathf.Clamp(transform.position.x, m_MinXPos, m_MaxXPos);

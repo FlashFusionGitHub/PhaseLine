@@ -28,8 +28,11 @@ public class ZoneController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-        foreach(CaptureZoneActor zone in zones)
+
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
+        foreach (CaptureZoneActor zone in zones)
         {
             progressTimer -= Time.deltaTime;
             

@@ -28,7 +28,10 @@ public class CaptureZoneActor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        foreach(TankActor tank in team1Tanks.ToList())
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
+        foreach (TankActor tank in team1Tanks.ToList())
         {
             if(tank == null)
                 team1Tanks.Remove(tank);

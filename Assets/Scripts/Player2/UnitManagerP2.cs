@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UnitManagerP2 : MonoBehaviour {
+public class UnitManagerP2 : MonoBehaviour
+{
 
     private InputDevice m_controller;
     private GameObject m_currentSelectionCircle;
@@ -21,21 +22,19 @@ public class UnitManagerP2 : MonoBehaviour {
 
     List<GameObject> selectionCircles = new List<GameObject>();
 
-    private void Awake()
-    {
-        m_controller = InputManager.Devices[1];
-    }
-
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
+        m_controller = GetComponent<CheckControllers>().m_controller_2;
 
         m_squads = GetComponentsInChildren<SquadController>().ToList();
 
         SelectedTank(m_squadIndex);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (m_squads.Count > 0)
         {
             foreach (SquadController squad in m_squads.ToList())
@@ -50,7 +49,9 @@ public class UnitManagerP2 : MonoBehaviour {
             }
 
             if (m_squads[m_squadIndex].m_currentGeneral != null && allGroundUnitsSelected == false)
+            {
                 m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
+            }
 
             if (m_controller.Action1.WasPressed)
             {
@@ -172,11 +173,13 @@ public class UnitManagerP2 : MonoBehaviour {
         {
             tank.GetComponent<ShrinkAndGrow>().SetGrowState(true);
         }
+
         //the selection ring will be instantiated at the selected squad memeber, the object is then stored in the currentCircle gameobject
         m_currentSelectionCircle = Instantiate(m_selectionCircle, m_squads[index].m_currentGeneral.transform.position, Quaternion.Euler(-90, 0, 0));
 
         m_camera.changePosition = true;
 
+        //to make finding the selected unit easier, set the cameras position so it looks at the selected unit
         m_camera.MoveCameraTo(m_squads[index].m_currentGeneral.transform.position.x, m_squads[index].m_currentGeneral.transform.position.z + 10);
     }
 

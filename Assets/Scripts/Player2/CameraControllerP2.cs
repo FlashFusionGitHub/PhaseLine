@@ -17,39 +17,34 @@ public class CameraControllerP2 : MonoBehaviour {
 
     public bool changePosition;
 
-    private void Awake()
-    {
-        m_controller = InputManager.Devices[1];
-    }
-
     // Use this for initialization
     void Start()
     {
-
+        m_controller = GetComponent<CheckControllers>().m_controller_2;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(changePosition == false)
+        if (FindObjectOfType<GameStateManager>().isPaused == true)
+            return;
+
+        if (m_controller.RightTrigger.IsPressed)
         {
-            if (m_controller.RightTrigger.IsPressed)
-            {
-                transform.position += new Vector3(0, -m_controller.RightStickY, 0);
+            transform.position += new Vector3(0, m_controller.RightStickY, 0);
 
-                float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
+            float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
 
-                transform.position = new Vector3(transform.position.x, zoom, transform.position.z);
-            }
-            else
-            {
-                this.transform.position += new Vector3(-m_controller.RightStickX, 0, -m_controller.RightStickY);
+            transform.position = new Vector3(transform.position.x, zoom, transform.position.z);
+        }
+        else if (changePosition == false)
+        {
+            this.transform.position += new Vector3(-m_controller.RightStickX, 0, -m_controller.RightStickY);
 
-                float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
-                float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
+            float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
+            float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
 
-                transform.position = new Vector3(panX, transform.position.y, panZ);
-            }
+            transform.position = new Vector3(panX, transform.position.y, panZ);
         }
 
         if (changePosition)
