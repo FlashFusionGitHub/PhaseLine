@@ -13,20 +13,16 @@ public class NavigationArrowActorP2 : MonoBehaviour {
 
     public int markerSpeed = 2;
 
-    private void Awake()
-    {
-         m_controller = InputManager.Devices[1];
-    }
-
     // Use this for initialization
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        m_controller = InputManager.Devices[0];
+
         if (FindObjectOfType<GameStateManager>().isPaused == true)
             return;
 

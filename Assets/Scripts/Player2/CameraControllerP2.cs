@@ -20,18 +20,19 @@ public class CameraControllerP2 : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        m_controller = GetComponent<CheckControllers>().m_controller_2;
     }
 
     // Update is called once per frame
     void Update()
     {
+        m_controller = InputManager.Devices[0];
+
         if (FindObjectOfType<GameStateManager>().isPaused == true)
             return;
 
         if (m_controller.RightTrigger.IsPressed)
         {
-            transform.position += new Vector3(0, m_controller.RightStickY, 0);
+            transform.position += new Vector3(0, -m_controller.RightStickY, 0);
 
             float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
 

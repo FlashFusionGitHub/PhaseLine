@@ -17,12 +17,12 @@ public class NavigationArrowActorP1 : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-        m_controller = GetComponent<CheckControllers>().m_controller_1;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        m_controller = InputManager.Devices[1];
 
         if (FindObjectOfType<GameStateManager>().isPaused == true)
             return;

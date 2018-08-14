@@ -25,16 +25,14 @@ public class UnitManagerP2 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_controller = GetComponent<CheckControllers>().m_controller_2;
-
-        m_squads = GetComponentsInChildren<SquadController>().ToList();
-
         SelectedTank(m_squadIndex);
     }
 
     // Update is called once per frame
     void Update()
     {
+        m_controller = InputManager.Devices[0];
+
         if (m_squads.Count > 0)
         {
             foreach (SquadController squad in m_squads.ToList())
