@@ -49,7 +49,7 @@ public class UnitManagerP1 : MonoBehaviour
 
             if (m_squads[m_squadIndex].m_currentGeneral != null && allGroundUnitsSelected == false)
             {
-                m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
+                    m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
             }
 
             if (m_controller.Action1.WasPressed)
