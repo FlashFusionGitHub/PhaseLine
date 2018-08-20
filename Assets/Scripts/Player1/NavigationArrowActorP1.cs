@@ -22,7 +22,7 @@ public class NavigationArrowActorP1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        m_controller = InputManager.Devices[1];
+        m_controller = InputManager.Devices[0];
 
         if (FindObjectOfType<GameStateManager>().isPaused == true)
             return;

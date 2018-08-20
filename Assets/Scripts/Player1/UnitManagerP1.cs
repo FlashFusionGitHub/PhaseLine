@@ -32,7 +32,7 @@ public class UnitManagerP1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_controller = InputManager.Devices[1];
+        m_controller = InputManager.Devices[0];
 
         if (m_squads.Count > 0)
         {
@@ -49,7 +49,7 @@ public class UnitManagerP1 : MonoBehaviour
 
             if (m_squads[m_squadIndex].m_currentGeneral != null && allGroundUnitsSelected == false)
             {
-                    m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
+                m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
             }
 
             if (m_controller.Action1.WasPressed)
@@ -168,7 +168,7 @@ public class UnitManagerP1 : MonoBehaviour
 
     void SelectedTank(int index)
     {
-        foreach (TankActor tank in m_squads[index].m_squad)
+        foreach (TankActor tank in m_squads[index].m_tanks)
         {
             tank.GetComponent<ShrinkAndGrow>().SetGrowState(true);
         }

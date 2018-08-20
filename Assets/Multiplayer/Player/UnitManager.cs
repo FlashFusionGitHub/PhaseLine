@@ -178,7 +178,7 @@ public class UnitManager : MonoBehaviour {
 
     void SelectedTank(int index)
     {
-        foreach(TankActor tank in m_squads[index].m_squad)
+        foreach(TankActor tank in m_squads[index].m_tanks)
         {
             tank.GetComponent<ShrinkAndGrow>().SetGrowState(true);
         }

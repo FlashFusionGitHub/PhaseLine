@@ -31,7 +31,7 @@ public class UnitManagerP2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_controller = InputManager.Devices[0];
+        m_controller = InputManager.Devices[1];
 
         if (m_squads.Count > 0)
         {
@@ -167,7 +167,7 @@ public class UnitManagerP2 : MonoBehaviour
 
     void SelectedTank(int index)
     {
-        foreach (TankActor tank in m_squads[index].m_squad)
+        foreach (TankActor tank in m_squads[index].m_tanks)
         {
             tank.GetComponent<ShrinkAndGrow>().SetGrowState(true);
         }
