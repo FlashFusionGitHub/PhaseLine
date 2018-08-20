@@ -69,7 +69,6 @@ public class CaptureZoneActor : MonoBehaviour {
                     if (capturePercentage >= 100)
                     {
                         owner = Owner.team1;
-                        FindObjectOfType<UnitManagerP1>().m_zonesCaptured.Add(this);
                     }
                 }
             }
@@ -110,7 +109,6 @@ public class CaptureZoneActor : MonoBehaviour {
                     if (capturePercentage >= 100)
                     {
                         owner = Owner.team2;
-                        FindObjectOfType<UnitManagerP2>().m_zonesCaptured.Add(this);
                     }
                 }
             }

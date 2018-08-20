@@ -22,8 +22,6 @@ public class UnitManagerP2 : MonoBehaviour
 
     List<GameObject> selectionCircles = new List<GameObject>();
 
-    public List<CaptureZoneActor> m_zonesCaptured = new List<CaptureZoneActor>();
-
     // Use this for initialization
     void Start()
     {
