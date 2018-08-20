@@ -22,6 +22,7 @@ public class UnitManagerP1 : MonoBehaviour
 
     List<GameObject> selectionCircles = new List<GameObject>();
 
+    public BomberSquadActor m_airStrike;
 
     // Use this for initialization
     void Start()
