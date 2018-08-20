@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitManagerP1 : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class UnitManagerP1 : MonoBehaviour
 
     List<GameObject> selectionCircles = new List<GameObject>();
 
+    public List<CaptureZoneActor> m_zonesCaptured = new List<CaptureZoneActor>();
+
+    public Text m_airstrikeText;
+
 
     // Use this for initialization
     void Start()
@@ -33,6 +38,13 @@ public class UnitManagerP1 : MonoBehaviour
     void Update()
     {
         m_controller = InputManager.Devices[1];
+
+        if (m_zonesCaptured.Count > 0)
+        {
+            m_airstrikeText.enabled = true;
+
+            m_airstrikeText.text = "Airstrikes Available: " + m_zonesCaptured.Count;
+        }
 
         if (m_squads.Count > 0)
         {
