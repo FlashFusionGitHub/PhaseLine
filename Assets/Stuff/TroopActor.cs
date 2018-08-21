@@ -14,6 +14,7 @@ public class TroopActor : MonoBehaviour {
         Helicopter
     }
 
+    [System.Serializable]
     public enum RankState
     {
         LookingForGeneral,
@@ -109,7 +110,7 @@ public class TroopActor : MonoBehaviour {
     [Header("Movement Settings")]
     [SerializeField] private bool moving;
     [SerializeField] private UnityEvent OnMove;
-    [SerializeField] private Transform moveTarget;
+    public Transform moveTarget;
     [SerializeField] private MovementTypes movementType;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float turnSpeed;
@@ -129,14 +130,12 @@ public class TroopActor : MonoBehaviour {
 
     [Header("Important Optimisation List")]
     [SerializeField] private ObjectPool op;
-
-    [Header("Selection Circle")]
-    [SerializeField] private GameObject selectionCircle;
 	
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                      / START FUNCTION BELOW \
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	void Start () {
+
         SetHealth(maxHealth);
         NameUnit();
         op = FindObjectOfType<ObjectPool>();
@@ -172,27 +171,6 @@ public class TroopActor : MonoBehaviour {
             AttackClosestEnemy();
         }
 
-        foreach(TroopActor troop in op.allTroopActors)
-        {
-            if(troop.team == Team.TEAM1)
-            {
-                if (troop.rankState == RankState.IsGeneral)
-                {
-                    if (FindObjectOfType<Controllers>().m_controller1.DPadLeft.WasPressed) {
-
-                    }
-
-                    if (FindObjectOfType<Controllers>().m_controller1.DPadLeft.WasPressed) {
-
-                    }
-
-                    if (FindObjectOfType<Controllers>().m_controller1.Action1.WasPressed)
-                    {
-                        troop.moveTarget.transform.position = FindObjectOfType<NavigationArrowActor>().transform.position;
-                    }
-                }
-            }
-        } 
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                      \ UPDATE FUNCTION ABOVE /
