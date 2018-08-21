@@ -25,10 +25,7 @@ public class CameraControllerP1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        m_controller = InputManager.Devices[1];
-
-        if (FindObjectOfType<GameStateManager>().isPaused == true)
-            return;
+        m_controller = FindObjectOfType<Controllers>().m_controller1;
 
         if (m_controller.RightTrigger.IsPressed)
         {

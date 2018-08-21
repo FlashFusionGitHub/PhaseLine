@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SquadController : MonoBehaviour {
 
-    public List<TankActor> m_squad = new List<TankActor>();
+    public List<TankActor> m_tanks = new List<TankActor>();
 
     public TankActor m_currentGeneral;
 
@@ -15,7 +15,7 @@ public class SquadController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        m_squad = GetComponentsInChildren<TankActor>().ToList();
+        m_tanks = GetComponentsInChildren<TankActor>().ToList();
 
         SetGeneral();
     }
@@ -26,9 +26,9 @@ public class SquadController : MonoBehaviour {
         if (FindObjectOfType<GameStateManager>().isPaused == true)
             return;
 
-        if (m_squad.Count > 0)
+        if (m_tanks.Count > 0)
         {
-            foreach (TankActor tank in m_squad.ToList())
+            foreach (TankActor tank in m_tanks.ToList())
             {
                 if (!tank.m_isGeneral)
                     tank.FollowGeneral(m_currentGeneral);
@@ -50,12 +50,12 @@ public class SquadController : MonoBehaviour {
                 {
                     if (!tank.m_isGeneral)
                     {
-                        m_squad.Remove(tank);
+                        m_tanks.Remove(tank);
                         Destroy(tank.gameObject);
                     }
                     else if (tank.m_isGeneral)
                     {
-                        m_squad.Remove(tank);
+                        m_tanks.Remove(tank);
                         PromoteToGeneral();
                         SetGeneral();
                         Destroy(tank.gameObject);
@@ -76,7 +76,7 @@ public class SquadController : MonoBehaviour {
 
     void PromoteToGeneral()
     {
-        foreach (TankActor tank in m_squad.ToList())
+        foreach (TankActor tank in m_tanks.ToList())
         {
             if(!tank.m_isGeneral)
             {
@@ -88,7 +88,7 @@ public class SquadController : MonoBehaviour {
 
     void SetGeneral()
     {
-        foreach(TankActor tank in m_squad.ToList())
+        foreach(TankActor tank in m_tanks.ToList())
         {
             if(tank.m_isGeneral)
             {

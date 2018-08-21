@@ -14,7 +14,7 @@ public class UnitManagerP1 : MonoBehaviour
     public List<SquadController> m_squads = new List<SquadController>();
 
     public GameObject m_selectionCircle;
-    public NavigationArrowActorP1 m_navigationMarker;
+    public NavigationArrowActor m_navigationMarker;
 
     public CameraControllerP1 m_camera;
 
@@ -22,6 +22,11 @@ public class UnitManagerP1 : MonoBehaviour
 
     List<GameObject> selectionCircles = new List<GameObject>();
 
+    public BomberSquadActor m_airStrike;
+
+    public bool m_airStrikeBegin;
+
+    public int m_airStrikes;
 
     // Use this for initialization
     void Start()
@@ -32,7 +37,17 @@ public class UnitManagerP1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_controller = InputManager.Devices[1];
+        m_controller = InputManager.Devices[0];
+
+        if(m_airStrikes > 0)
+        {
+            if (m_controller.Action3.WasPressed)
+            {
+                m_airStrikeBegin = true;
+                Instantiate(m_airStrike, m_navigationMarker.transform.position, Quaternion.identity);
+                m_airStrikes--;
+            }
+        }
 
         if (m_squads.Count > 0)
         {
@@ -52,35 +67,45 @@ public class UnitManagerP1 : MonoBehaviour
                 m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
             }
 
-            if (m_controller.Action1.WasPressed)
+            if(!m_airStrikeBegin)
             {
-                if (allGroundUnitsSelected != true)
+                if(m_navigationMarker.enabled == false)
+                    m_navigationMarker.enabled = true;
+
+                if (m_controller.Action1.WasPressed)
                 {
-                    if (m_navigationMarker.GetEnemyToAttack() != null)
-                    {
-                        m_squads[m_squadIndex].m_enemy = m_navigationMarker.GetEnemyToAttack();
-                    }
-                    else
-                    {
-                        m_squads[m_squadIndex].m_enemy = null;
-                        m_squads[m_squadIndex].m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
-                    }
-                }
-                else
-                {
-                    foreach (SquadController squad in m_squads)
+                    if (allGroundUnitsSelected != true)
                     {
                         if (m_navigationMarker.GetEnemyToAttack() != null)
                         {
-                            squad.m_enemy = m_navigationMarker.GetEnemyToAttack();
+                            m_squads[m_squadIndex].m_enemy = m_navigationMarker.GetEnemyToAttack();
                         }
                         else
                         {
-                            squad.m_enemy = null;
-                            squad.m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
+                            m_squads[m_squadIndex].m_enemy = null;
+                            m_squads[m_squadIndex].m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
+                        }
+                    }
+                    else
+                    {
+                        foreach (SquadController squad in m_squads)
+                        {
+                            if (m_navigationMarker.GetEnemyToAttack() != null)
+                            {
+                                squad.m_enemy = m_navigationMarker.GetEnemyToAttack();
+                            }
+                            else
+                            {
+                                squad.m_enemy = null;
+                                squad.m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
+                            }
                         }
                     }
                 }
+            }
+            else
+            {
+                m_navigationMarker.enabled = false;
             }
 
             if (m_controller.RightStickButton.WasPressed)
@@ -168,7 +193,7 @@ public class UnitManagerP1 : MonoBehaviour
 
     void SelectedTank(int index)
     {
-        foreach (TankActor tank in m_squads[index].m_squad)
+        foreach (TankActor tank in m_squads[index].m_tanks)
         {
             tank.GetComponent<ShrinkAndGrow>().SetGrowState(true);
         }
