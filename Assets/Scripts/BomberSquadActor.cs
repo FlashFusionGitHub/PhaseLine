@@ -14,7 +14,7 @@ public class BomberSquadActor : MonoBehaviour {
 
     public InputDevice m_controller;
 
-    bool m_beginStrike;
+    public bool m_beginStrike;
 
     public float timer = 5;
 
@@ -52,6 +52,11 @@ public class BomberSquadActor : MonoBehaviour {
             if (m_controller.Action1.WasPressed)
             {
                 m_beginStrike = true;
+
+                if (team == Team.TEAM1)
+                    FindObjectOfType<UnitManagerP1>().m_airStrikeBegin = false;
+                if (team == Team.TEAM2)
+                    FindObjectOfType<UnitManagerP2>().m_airStrikeBegin = false;
             }
         }
 

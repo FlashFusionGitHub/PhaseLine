@@ -22,6 +22,12 @@ public class UnitManagerP2 : MonoBehaviour
 
     List<GameObject> selectionCircles = new List<GameObject>();
 
+    public BomberSquadActor m_airStrike;
+
+    public bool m_airStrikeBegin;
+
+    public int m_airStrikes;
+
     // Use this for initialization
     void Start()
     {
@@ -32,6 +38,15 @@ public class UnitManagerP2 : MonoBehaviour
     void Update()
     {
         m_controller = InputManager.Devices[1];
+
+        if (m_airStrikes > 0)
+        {
+            if (m_controller.Action3.WasPressed)
+            {
+                Instantiate(m_airStrike, m_navigationMarker.transform.position, Quaternion.identity);
+                m_airStrikes--;
+            }
+        }
 
         if (m_squads.Count > 0)
         {
@@ -51,32 +66,38 @@ public class UnitManagerP2 : MonoBehaviour
                 m_currentSelectionCircle.transform.position = m_squads[m_squadIndex].m_currentGeneral.transform.position;
             }
 
-            if (m_controller.Action1.WasPressed)
+            if (!m_airStrikeBegin)
             {
-                if (allGroundUnitsSelected != true)
+                if (m_navigationMarker.enabled == false)
+                    m_navigationMarker.enabled = true;
+
+                if (m_controller.Action1.WasPressed)
                 {
-                    if (m_navigationMarker.GetEnemyToAttack() != null)
-                    {
-                        m_squads[m_squadIndex].m_enemy = m_navigationMarker.GetEnemyToAttack();
-                    }
-                    else
-                    {
-                        m_squads[m_squadIndex].m_enemy = null;
-                        m_squads[m_squadIndex].m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
-                    }
-                }
-                else
-                {
-                    foreach (SquadController squad in m_squads)
+                    if (allGroundUnitsSelected != true)
                     {
                         if (m_navigationMarker.GetEnemyToAttack() != null)
                         {
-                            squad.m_enemy = m_navigationMarker.GetEnemyToAttack();
+                            m_squads[m_squadIndex].m_enemy = m_navigationMarker.GetEnemyToAttack();
                         }
                         else
                         {
-                            squad.m_enemy = null;
-                            squad.m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
+                            m_squads[m_squadIndex].m_enemy = null;
+                            m_squads[m_squadIndex].m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
+                        }
+                    }
+                    else
+                    {
+                        foreach (SquadController squad in m_squads)
+                        {
+                            if (m_navigationMarker.GetEnemyToAttack() != null)
+                            {
+                                squad.m_enemy = m_navigationMarker.GetEnemyToAttack();
+                            }
+                            else
+                            {
+                                squad.m_enemy = null;
+                                squad.m_currentGeneral.m_agent.SetDestination(m_navigationMarker.transform.position);
+                            }
                         }
                     }
                 }

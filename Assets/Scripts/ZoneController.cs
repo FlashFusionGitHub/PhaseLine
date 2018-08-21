@@ -42,12 +42,16 @@ public class ZoneController : MonoBehaviour {
                 {
                     m_percentage -= amount;
 
+                    FindObjectOfType<UnitManagerP1>().m_airStrikes++;
+
                     progressBar.fillAmount = m_percentage / m_startPercentage;
                 }
 
                 if (zone.owner == CaptureZoneActor.Owner.team2)
                 {
                     m_percentage += amount;
+
+                    FindObjectOfType<UnitManagerP2>().m_airStrikes++;
 
                     progressBar.fillAmount = m_percentage / m_startPercentage;
                 }

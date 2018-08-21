@@ -14,7 +14,7 @@ public class HangerSpawner : MonoBehaviour {
     }
 
     [System.Serializable]
-    public struct HangerDoorData
+    public class HangerDoorData
     {
         public Transform m_hangerDoor;
         public Vector3 m_openPos;
@@ -23,7 +23,8 @@ public class HangerSpawner : MonoBehaviour {
     }
 
     [Header("Spawn Stuff")]
-    public GameObject tankPrefab;
+    public TroopActor.UnitClasses spawnClass;
+    public string team;
     public Transform spawnPoint;
     public GameObject lastSpawnedObject;
     public float disBeforeNextSpawn;
@@ -36,9 +37,12 @@ public class HangerSpawner : MonoBehaviour {
     [SerializeField] private float m_doorOpenTime;
     [SerializeField] private float m_doorCloseTime;
 
+    [Header("Object Pool")]
+    [SerializeField] private ObjectPool objectPool;
+
     // Use this for initialization
     void Start () {
-		
+        objectPool = FindObjectOfType<ObjectPool>();
 	}
 	
 	// Update is called once per frame
@@ -112,7 +116,7 @@ public class HangerSpawner : MonoBehaviour {
 
     public void CheckSpawn()
     {
-        if (doorState == DoorState.closed)
+        if (doorState == DoorState.closed && ObjectToSpawnAvaliable())
         {
             SpawnObject();
             spawnWaiting = false;
@@ -123,9 +127,29 @@ public class HangerSpawner : MonoBehaviour {
             spawnWaiting = true;
         }
     }
+    TroopActor ObjectToSpawnAvaliable()
+    {
+        foreach (TroopActor ta in objectPool.allTroopActors)
+        {
+            if (ta.rankState == TroopActor.RankState.dead && ta.team == team && ta.unitClass == spawnClass)
+            {
+                return ta;
+            }
+        }
+        return null;
+    }
     void SpawnObject()
     {
-        lastSpawnedObject = Instantiate(tankPrefab, spawnPoint.position, transform.rotation);
+        TroopActor ta = ObjectToSpawnAvaliable();
+        lastSpawnedObject = ta.gameObject;
+        if (ta.gameObject.activeInHierarchy == false)
+        {
+            ta.gameObject.SetActive(true);
+        }
+        ta.SetHealth(ta.maxHealth);
+        ta.rankState = TroopActor.RankState.LookingForGeneral;
+        ta.transform.position = spawnPoint.position;
+
     }
     bool safeToClose()
     {

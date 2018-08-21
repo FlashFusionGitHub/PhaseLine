@@ -11,8 +11,6 @@ public class SpawnAfterTime : MonoBehaviour {
         ready
     }
 
-    public GameObject prefabToSpawn;
-
     [SerializeField] SpawnerStates spawnerState;
     [SerializeField] HangerSpawner[] spawnPoints;
     [SerializeField] float delayPerSpawnPoint;
@@ -35,8 +33,8 @@ public class SpawnAfterTime : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (FindObjectOfType<GameStateManager>().isPaused == true)
-            return;
+       // if (FindObjectOfType<GameStateManager>().isPaused == true)
+          //  return;
 
         if (spawnerState == SpawnerStates.waiting)
         {
@@ -65,7 +63,6 @@ public class SpawnAfterTime : MonoBehaviour {
     {
         foreach (HangerSpawner hs in spawnPoints)
         {
-            hs.tankPrefab = prefabToSpawn;
             hs.CheckSpawn();
         }
     }
