@@ -26,8 +26,8 @@ GameObject:
   m_Name: cactus2nd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!4 &4086795754177448
 Transform:
@@ -35,13 +35,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1443719920405050}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17, y: 33.4, z: 8.7}
+  m_LocalRotation: {x: -0, y: 0.3558723, z: -0, w: 0.9345346}
+  m_LocalPosition: {x: 319.7, y: 46.57, z: -3.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 41.694, z: 0}
 --- !u!23 &23557286873429066
 MeshRenderer:
   m_ObjectHideFlags: 1
