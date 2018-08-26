@@ -22,26 +22,23 @@ public class Explosion : MonoBehaviour {
     {
         if(team == Team.TEAM1)
         {
-            if (other.gameObject.GetComponent<TankActor>().m_team2unit)
+            if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM1)
             {
-                other.gameObject.GetComponent<TankActor>().TakeDamage(damage);
+                other.gameObject.GetComponent<TroopActor>().TakeDamage(damage);
             }
         }
 
         if (team == Team.TEAM2)
         {
-            if (other.gameObject.GetComponent<TankActor>().m_team1unit)
+            if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
             {
-                other.gameObject.GetComponent<TankActor>().TakeDamage(damage);
+                other.gameObject.GetComponent<TroopActor>().TakeDamage(damage);
             }
         }
 
         if (team == Team.NONE)
         {
-            if(other.gameObject.GetComponent<TankActor>())
-            {
-                other.gameObject.GetComponent<TankActor>().TakeDamage(damage);
-            }
+            //Damage objects in scene with explosions
         }
     }
 }

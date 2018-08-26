@@ -275,7 +275,6 @@ public class TroopActor : MonoBehaviour {
                 gun.m_gunTimer -= Time.deltaTime;
                 if (gun.m_gunTimer < Time.deltaTime)
                 {
-                    Debug.Log("Bang");
                     ResetGunTimer(gun);
                     Fire(gun);
                 }
@@ -511,7 +510,7 @@ public class TroopActor : MonoBehaviour {
         }
     }
 
-    void TakeDamage(float damageToTake)
+    public void TakeDamage(float damageToTake)
     {
         onTakeDamage.Invoke();
         currentHealth -= damageToTake;
@@ -525,7 +524,6 @@ public class TroopActor : MonoBehaviour {
         onDie.Invoke();
         if (rankState == RankState.IsGeneral)
         {
-            Debug.Log("Closest Ally = " + ClosestAlly());
             if (ClosestAlly())
             PromoteToGeneral(ClosestAlly());
             rankState = RankState.dead;

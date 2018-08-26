@@ -6,7 +6,10 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour {
 
 
-    [SerializeField] public List<TroopActor> allTroopActors = new List<TroopActor>();
+    public List<TroopActor> allTroopActors = new List<TroopActor>();
+
+    public List<TroopActor> team1Troops = new List<TroopActor>();
+    public List<TroopActor> team2Troops = new List<TroopActor>();
 
     // Use this for initialization
     void Start () {

@@ -5,7 +5,7 @@ using System.Linq;
 
 public class CaptureZoneActor : MonoBehaviour {
 
-    public enum Owner { none, team1, team2};
+    public enum Owner { NONE, TEAM1, TEAM2};
 
     bool partialCaptureTeam1;
     bool partialCaptureTeam2;
@@ -17,45 +17,41 @@ public class CaptureZoneActor : MonoBehaviour {
     public float captureTimer = 0;
     public float captureTime = 10;
 
-    List<TankActor> team1Tanks = new List<TankActor>();
-    List<TankActor> team2Tanks = new List<TankActor>();
+    private ObjectPool op;
 
     // Use this for initialization
     void Start () {
-
+        op = FindObjectOfType<ObjectPool>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (FindObjectOfType<GameStateManager>().isPaused == true)
-            return;
-
-        foreach (TankActor tank in team1Tanks.ToList())
+        foreach (TroopActor tank in op.team1Troops)
         {
             if(tank == null)
-                team1Tanks.Remove(tank);
+                op.team1Troops.Remove(tank);
         }
 
-        foreach (TankActor tank in team2Tanks.ToList())
+        foreach (TroopActor tank in op.team2Troops.ToList())
         {
             if(tank == null)
-                team2Tanks.Remove(tank);
+                op.team2Troops.Remove(tank);
         }
 
         if (capturePercentage == 0)
         {
-            owner = Owner.none;
+            owner = Owner.NONE;
         }
 
-        if(team1Tanks.Count > 0 && team2Tanks.Count == 0)
+        if(op.team1Troops.Count > 0 && op.team2Troops.Count == 0)
         {
             if (partialCaptureTeam2)
             {
                 capturePercentage = 0;
             }
 
-            if (owner == Owner.none)
+            if (owner == Owner.NONE)
             {
                 captureTimer -= Time.deltaTime;
 
@@ -68,11 +64,11 @@ public class CaptureZoneActor : MonoBehaviour {
 
                     if (capturePercentage >= 100)
                     {
-                        owner = Owner.team1;
+                        owner = Owner.TEAM1;
                     }
                 }
             }
-            else if(owner == Owner.team2)
+            else if(owner == Owner.TEAM2)
             {
                 captureTimer -= Time.deltaTime;
 
@@ -88,14 +84,14 @@ public class CaptureZoneActor : MonoBehaviour {
             }
         }
 
-        if (team2Tanks.Count > 0 && team1Tanks.Count == 0)
+        if (op.team2Troops.Count > 0 && op.team1Troops.Count == 0)
         {
             if (partialCaptureTeam1)
             {
                 capturePercentage = 0;
             }
 
-            if (owner == Owner.none)
+            if (owner == Owner.NONE)
             {
                 captureTimer -= Time.deltaTime;
 
@@ -108,11 +104,11 @@ public class CaptureZoneActor : MonoBehaviour {
 
                     if (capturePercentage >= 100)
                     {
-                        owner = Owner.team2;
+                        owner = Owner.TEAM2;
                     }
                 }
             }
-            else if (owner == Owner.team1)
+            else if (owner == Owner.TEAM1)
             {
                 captureTimer -= Time.deltaTime;
 
@@ -128,7 +124,7 @@ public class CaptureZoneActor : MonoBehaviour {
             }
         }
 
-        if(team1Tanks.Count == 0 && team2Tanks.Count == 0 && owner == Owner.none)
+        if(op.team1Troops.Count == 0 && op.team2Troops.Count == 0 && owner == Owner.NONE)
         {
             capturePercentage = 0;
         }
@@ -136,27 +132,27 @@ public class CaptureZoneActor : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 
-        if(other.GetComponent<TankActor>().m_team1unit)
+        if(other.GetComponent<TroopActor>().team == Team.TEAM1)
         {
-            team1Tanks.Add(other.GetComponent<TankActor>());
+            op.team1Troops.Add(other.GetComponent<TroopActor>());
         }
 
-        if (other.GetComponent<TankActor>().m_team2unit)
+        if (other.GetComponent<TroopActor>().team == Team.TEAM2)
         {
-            team2Tanks.Add(other.GetComponent<TankActor>());
+            op.team2Troops.Add(other.GetComponent<TroopActor>());
         }
     }
 
     private void OnTriggerExit(Collider other) {
 
-        if (other.GetComponent<TankActor>().m_team1unit)
+        if (other.GetComponent<TroopActor>().team == Team.TEAM1)
         {
-            team1Tanks.Remove(other.GetComponent<TankActor>());
+            op.team1Troops.Remove(other.GetComponent<TroopActor>());
         }
 
-        if (other.GetComponent<TankActor>().m_team2unit)
+        if (other.GetComponent<TroopActor>().team == Team.TEAM2)
         {
-            team2Tanks.Remove(other.GetComponent<TankActor>());
+            op.team2Troops.Remove(other.GetComponent<TroopActor>());
         }
     }
 }

@@ -12,18 +12,18 @@ public class TroopController : MonoBehaviour {
     private GameObject m_selectionCircle;
     private GameObject m_currentSelectionCircle;
 
-    private void Awake()
-    {
-    }
+    List<CaptureZoneActor> zonesCaptured;
+
+    public Team team;
 
     // Use this for initialization
     void Start () {
+            m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[0].transform.position, Quaternion.Euler(-90, 0, 0));
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (FindObjectOfType<Controllers>().m_controller1.DPadLeft.WasPressed)
         {
             //if the tank index is less than or equal to zero
@@ -59,12 +59,12 @@ public class TroopController : MonoBehaviour {
             m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
         }
 
-        if (FindObjectOfType<Controllers>().m_controller1.Action1.WasPressed)
+        if (FindObjectOfType<Controllers>().m_controller1.Action1.WasPressed && !FindObjectOfType<NavigationArrowActor>().airStrikeState)
         {
-            m_generals[index].moveTarget.transform.position = FindObjectOfType<NavigationArrowActor>().transform.position;
+            m_generals[index].moveTarget.transform.position = FindObjectOfType<NavigationArrowActor>().currentMarker.transform.position;
         }
 
-        if (m_currentSelectionCircle != null)
+        if(m_currentSelectionCircle != null)
             m_currentSelectionCircle.transform.position = m_generals[index].transform.position;
     }
 

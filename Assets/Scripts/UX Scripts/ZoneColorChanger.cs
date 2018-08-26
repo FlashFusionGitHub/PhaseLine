@@ -40,15 +40,15 @@ public class ZoneColorChanger : MonoBehaviour
         if (m_captureZoneActor)
         {
             m_progress = m_captureZoneActor.capturePercentage / 100;
-            if (m_captureZoneActor.owner == CaptureZoneActor.Owner.none)
+            if (m_captureZoneActor.owner == CaptureZoneActor.Owner.NONE)
             {
                 m_changeColor.ChangeColorTo(Color.Lerp(m_teamColors[0], m_teamColors[1], m_progress));
             }
-            else if (m_captureZoneActor.owner == CaptureZoneActor.Owner.team1)
+            else if (m_captureZoneActor.owner == CaptureZoneActor.Owner.TEAM1)
             {
                 m_changeColor.ChangeColorTo(Color.Lerp(m_teamColors[0], m_teamColors[2], m_progress));
             }
-            else if (m_captureZoneActor.owner == CaptureZoneActor.Owner.team2)
+            else if (m_captureZoneActor.owner == CaptureZoneActor.Owner.TEAM2)
             {
                 m_changeColor.ChangeColorTo(Color.Lerp(m_teamColors[0], m_teamColors[3], m_progress));
             }

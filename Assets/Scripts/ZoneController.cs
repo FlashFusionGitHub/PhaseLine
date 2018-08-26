@@ -29,29 +29,25 @@ public class ZoneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (FindObjectOfType<GameStateManager>().isPaused == true)
-            return;
-
         foreach (CaptureZoneActor zone in zones)
         {
             progressTimer -= Time.deltaTime;
             
             if(progressTimer <= 0)
             {
-                if (zone.owner == CaptureZoneActor.Owner.team1)
+                if (zone.owner == CaptureZoneActor.Owner.NONE)
+                    return;
+
+                if (zone.owner == CaptureZoneActor.Owner.TEAM1)
                 {
                     m_percentage -= amount;
-
-                    FindObjectOfType<UnitManagerP1>().m_airStrikes++;
 
                     progressBar.fillAmount = m_percentage / m_startPercentage;
                 }
 
-                if (zone.owner == CaptureZoneActor.Owner.team2)
+                if (zone.owner == CaptureZoneActor.Owner.TEAM2)
                 {
                     m_percentage += amount;
-
-                    FindObjectOfType<UnitManagerP2>().m_airStrikes++;
 
                     progressBar.fillAmount = m_percentage / m_startPercentage;
                 }
