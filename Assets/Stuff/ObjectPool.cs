@@ -19,7 +19,12 @@ public class ObjectPool : MonoBehaviour {
         {
             if (troop.team == Team.TEAM1 && troop.rankState == TroopActor.RankState.IsGeneral)
             {
-                FindObjectOfType<TroopController>().AddGeneralToList(troop);
+                FindObjectOfType<TroopControllerP1>().AddGeneral(troop);
+            }
+
+            if (troop.team == Team.TEAM2 && troop.rankState == TroopActor.RankState.IsGeneral)
+            {
+                FindObjectOfType<TroopControllerP2>().AddGeneral(troop);
             }
         }
     }

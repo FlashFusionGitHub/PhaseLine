@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CameraControllerP2 : MonoBehaviour {
 
-    private InputDevice m_controller;
-
     public float m_MinZoom = 10.0f, m_MaxZoom = 50.0f;
     public float m_MinPanX = -50.0f, m_MaxPanX = 50.0f;
     public float m_MinPanZ = -50.0f, m_MaxPanZ = 50.0f;
@@ -17,6 +15,8 @@ public class CameraControllerP2 : MonoBehaviour {
 
     public bool changePosition;
 
+    InputDevice m_controller;
+
     // Use this for initialization
     void Start()
     {
@@ -25,32 +25,31 @@ public class CameraControllerP2 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        m_controller = InputManager.Devices[1];
+        m_controller = FindObjectOfType<Controllers>().m_controller2;
 
-        if (FindObjectOfType<GameStateManager>().isPaused == true)
-            return;
-
-        if (m_controller.RightTrigger.IsPressed)
+        if (!changePosition)
         {
-            transform.position += new Vector3(0, -m_controller.RightStickY, 0);
+            if (m_controller.RightTrigger.IsPressed)
+            {
+                transform.position += new Vector3(0, -m_controller.RightStickY, 0);
 
-            float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
+                float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
 
-            transform.position = new Vector3(transform.position.x, zoom, transform.position.z);
+                transform.position = new Vector3(transform.position.x, zoom, transform.position.z);
+            }
+            else
+            {
+                this.transform.position += new Vector3(m_controller.RightStickX, 0, m_controller.RightStickY);
+
+                float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
+                float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
+
+                transform.position = new Vector3(panX, transform.position.y, panZ);
+            }
         }
-        else if (changePosition == false)
+        else
         {
-            this.transform.position += new Vector3(-m_controller.RightStickX, 0, -m_controller.RightStickY);
-
-            float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
-            float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
-
-            transform.position = new Vector3(panX, transform.position.y, panZ);
-        }
-
-        if (changePosition)
-        {
-            transform.position = Vector3.Slerp(transform.position, position, slerpSpeed);
+            transform.position = Vector3.Lerp(transform.position, position, slerpSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, position) <= 1)
             {
@@ -61,6 +60,7 @@ public class CameraControllerP2 : MonoBehaviour {
 
     public void MoveCameraTo(float x, float z)
     {
+        changePosition = true;
         position = new Vector3(x, transform.position.y, z);
     }
 }

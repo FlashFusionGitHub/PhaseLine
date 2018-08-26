@@ -13,6 +13,6 @@ public class Controllers : MonoBehaviour
 	void Update ()
     {
         m_controller1 = InputManager.Devices[0];
-        //m_controller2 = InputManager.Devices[1];
+        m_controller2 = InputManager.Devices[1];
     }
 }

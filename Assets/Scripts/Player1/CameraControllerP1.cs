@@ -27,27 +27,29 @@ public class CameraControllerP1 : MonoBehaviour {
     {
         m_controller = FindObjectOfType<Controllers>().m_controller1;
 
-        if (m_controller.RightTrigger.IsPressed)
+        if (!changePosition)
         {
-            transform.position += new Vector3(0, -m_controller.RightStickY, 0);
+            if (m_controller.RightTrigger.IsPressed)
+            {
+                transform.position += new Vector3(0, -m_controller.RightStickY, 0);
 
-            float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
+                float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
 
-            transform.position = new Vector3(transform.position.x, zoom, transform.position.z);
+                transform.position = new Vector3(transform.position.x, zoom, transform.position.z);
+            }
+            else
+            {
+                this.transform.position += new Vector3(m_controller.RightStickX, 0, m_controller.RightStickY);
+
+                float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
+                float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
+
+                transform.position = new Vector3(panX, transform.position.y, panZ);
+            }
         }
-        else if (changePosition == false)
+        else
         {
-            this.transform.position += new Vector3(m_controller.RightStickX, 0, m_controller.RightStickY);
-
-            float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
-            float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
-
-            transform.position = new Vector3(panX, transform.position.y, panZ);
-        }
-
-        if (changePosition)
-        {
-            transform.position = Vector3.Slerp(transform.position, position, slerpSpeed);
+            transform.position = Vector3.Lerp(transform.position, position, slerpSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, position) <= 1)
             {
@@ -58,6 +60,7 @@ public class CameraControllerP1 : MonoBehaviour {
 
     public void MoveCameraTo(float x, float z)
     {
+        changePosition = true;
         position = new Vector3(x, transform.position.y, z);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TroopController : MonoBehaviour {
+public class TroopControllerP1 : MonoBehaviour {
 
     public List<TroopActor> m_generals = new List<TroopActor>();
     int index = 0;
@@ -13,8 +13,6 @@ public class TroopController : MonoBehaviour {
     private GameObject m_currentSelectionCircle;
 
     List<CaptureZoneActor> zonesCaptured;
-
-    public Team team;
 
     // Use this for initialization
     void Start () {
@@ -39,6 +37,8 @@ public class TroopController : MonoBehaviour {
 
             index--;
 
+            FindObjectOfType<CameraControllerP1>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 20);
+
             m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
         }
 
@@ -56,12 +56,14 @@ public class TroopController : MonoBehaviour {
 
             index++;
 
+            FindObjectOfType<CameraControllerP1>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 20);
+
             m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
         }
 
-        if (FindObjectOfType<Controllers>().m_controller1.Action1.WasPressed && !FindObjectOfType<NavigationArrowActor>().airStrikeState)
+        if (FindObjectOfType<Controllers>().m_controller1.Action1.WasPressed && !FindObjectOfType<NavigationArrowP1>().airStrikeState)
         {
-            m_generals[index].moveTarget.transform.position = FindObjectOfType<NavigationArrowActor>().currentMarker.transform.position;
+            m_generals[index].moveTarget.transform.position = FindObjectOfType<NavigationArrowP1>().currentMarker.transform.position;
         }
 
         if(m_currentSelectionCircle != null)
@@ -69,12 +71,12 @@ public class TroopController : MonoBehaviour {
     }
 
 
-    public void AddGeneralToList(TroopActor troop)
+    public void AddGeneral(TroopActor troop)
     {
         m_generals.Add(troop);
     }
 
-    public void RemoveGenerealFromList(TroopActor troop)
+    public void RemoveGenereal(TroopActor troop)
     {
         m_generals.Remove(troop);
     }
