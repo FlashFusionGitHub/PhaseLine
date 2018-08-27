@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33821059346271568}
   - component: {fileID: 23497961031219622}
   - component: {fileID: 95860753873703750}
+  - component: {fileID: 65394993198790028}
   m_Layer: 0
   m_Name: cactus3rd
   m_TagString: Untagged
@@ -83,6 +84,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1689114255795486}
   m_Mesh: {fileID: 4300000, guid: 733711491a8e2ab47ae466fc9700f4e4, type: 3}
+--- !u!65 &65394993198790028
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689114255795486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 11.633103, y: 13.677025, z: 4.5787325}
+  m_Center: {x: -0.29943514, y: -1.7576945, z: 0}
 --- !u!95 &95860753873703750
 Animator:
   serializedVersion: 3
