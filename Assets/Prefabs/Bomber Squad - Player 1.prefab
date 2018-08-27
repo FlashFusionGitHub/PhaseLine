@@ -88,13 +88,14 @@ GameObject:
   - component: {fileID: 4438246065911198}
   - component: {fileID: 135652483544888492}
   - component: {fileID: 114140763037707592}
+  - component: {fileID: 54179803093497296}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1248647105434302
 GameObject:
   m_ObjectHideFlags: 1
@@ -172,13 +173,14 @@ GameObject:
   - component: {fileID: 4813881572736446}
   - component: {fileID: 135991485003378206}
   - component: {fileID: 114392180588553156}
+  - component: {fileID: 54460803084556620}
   m_Layer: 0
   m_Name: Explosion (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1565743974195358
 GameObject:
   m_ObjectHideFlags: 1
@@ -205,12 +207,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4128664780924240}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: Bombs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1626808349547888
 GameObject:
   m_ObjectHideFlags: 1
@@ -269,13 +271,14 @@ GameObject:
   - component: {fileID: 4603172933478690}
   - component: {fileID: 135377923201805624}
   - component: {fileID: 114303647000429870}
+  - component: {fileID: 54181929949430472}
   m_Layer: 0
   m_Name: Explosion (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1826104322165132
 GameObject:
   m_ObjectHideFlags: 1
@@ -653,7 +656,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1904398139681808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -42.15846, y: 1, z: -53.140408}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4506155008402140}
@@ -1045,6 +1048,51 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076777081248302}
   m_Mesh: {fileID: 4300000, guid: 948a194b378f56145a448c7a7446395b, type: 3}
+--- !u!54 &54179803093497296
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189566921619906}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54181929949430472
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733816406098170}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54460803084556620
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1505166582302788}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65021570236057930
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1135,11 +1183,9 @@ MonoBehaviour:
   - {fileID: 1860562101069768}
   - {fileID: 1655234275227650}
   - {fileID: 1162661182641460}
-  m_bombs:
-  - {fileID: 1189566921619906}
-  - {fileID: 1505166582302788}
-  - {fileID: 1733816406098170}
+  m_bombs: {fileID: 1580154791568182}
   m_marker: {fileID: 1883656705169742}
+  m_beginStrike: 0
   timer: 5
   team: 1
 --- !u!135 &135377923201805624

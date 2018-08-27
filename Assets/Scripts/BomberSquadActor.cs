@@ -8,7 +8,7 @@ public class BomberSquadActor : MonoBehaviour {
 
     public List<GameObject> m_planes;
 
-    public List<GameObject> m_bombs;
+    public GameObject m_bombs;
 
     public GameObject m_marker;
 
@@ -41,13 +41,9 @@ public class BomberSquadActor : MonoBehaviour {
     {
         if(timer <= 0.0f)
         {
-            foreach (GameObject bomb in m_bombs)
-            {
-                if (bomb != null)
-                    bomb.SetActive(true);
+            m_bombs.SetActive(true);
 
-                Destroy(bomb, 2);
-            }
+            Destroy(gameObject, 2);
         }
     }
 }

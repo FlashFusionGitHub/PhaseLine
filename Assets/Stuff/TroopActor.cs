@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class TroopActor : MonoBehaviour {
 
@@ -102,10 +103,11 @@ public class TroopActor : MonoBehaviour {
     [SerializeField] private string[] possibleNames;
 
     [Header("Health Settings")]
-    [SerializeField] public float maxHealth;
+    public float maxHealth;
     [SerializeField] private float currentHealth;
     [SerializeField] private UnityEvent onTakeDamage;
     [SerializeField] private UnityEvent onDie;
+    public Image m_healthBar;
 
     [Header("Movement Settings")]
     [SerializeField] private bool moving;
@@ -146,6 +148,8 @@ public class TroopActor : MonoBehaviour {
     public void SetHealth(float newHealth)
     {
         currentHealth = newHealth;
+
+        m_healthBar.fillAmount = currentHealth / maxHealth;
     }
     void NameUnit()
     {
@@ -518,6 +522,8 @@ public class TroopActor : MonoBehaviour {
         {
             Die();
         }
+
+        m_healthBar.fillAmount = currentHealth / maxHealth;
     }
     void Die()
     {

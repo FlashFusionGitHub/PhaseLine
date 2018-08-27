@@ -8,9 +8,8 @@ public class Explosion : MonoBehaviour {
 
     public int damage;
 
-	// Use this for initialization
-	void Start () {
-		
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
@@ -20,19 +19,22 @@ public class Explosion : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(team == Team.TEAM1)
+        if(other.gameObject.GetComponent<TroopActor>())
         {
-            if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM1)
+            if (team == Team.TEAM2)
             {
-                other.gameObject.GetComponent<TroopActor>().TakeDamage(damage);
+                if (other.GetComponent<TroopActor>().team == Team.TEAM1)
+                {
+                    other.gameObject.GetComponent<TroopActor>().TakeDamage(damage);
+                }
             }
-        }
 
-        if (team == Team.TEAM2)
-        {
-            if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
+            if (team == Team.TEAM1)
             {
-                other.gameObject.GetComponent<TroopActor>().TakeDamage(damage);
+                if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
+                {
+                    other.gameObject.GetComponent<TroopActor>().TakeDamage(damage);
+                }
             }
         }
 

@@ -23,43 +23,27 @@ public class TroopControllerP2 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (m_generals[index].rankState == TroopActor.RankState.dead)
+        {
+            Destroy(m_currentSelectionCircle);
+        }
+
         if (FindObjectOfType<Controllers>().m_controller2.DPadLeft.WasPressed)
         {
-            //if the tank index is less than or equal to zero
-            if (index == 0)
-            {
-                //set the tank index to the current squad size
-                index = m_generals.Count;
-            }
-
             //destory the currect circle
             if (m_currentSelectionCircle != null)
                 Destroy(m_currentSelectionCircle);
 
-            index--;
-
-            FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
-
-            m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
+            CheckGeneralState(false, true);
         }
 
         if (FindObjectOfType<Controllers>().m_controller2.DPadRight.WasPressed)
         {
-            if (index == m_generals.Count - 1)
-            {
-                //set the tank index so the first element will have a selection ring
-                index = -1;
-            }
-
             //destory the currect circle
             if (m_currentSelectionCircle != null)
                 Destroy(m_currentSelectionCircle);
 
-            index++;
-
-            FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
-
-            m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
+            CheckGeneralState(true, false);
         }
 
         if (FindObjectOfType<Controllers>().m_controller2.Action1.WasPressed && !FindObjectOfType<NavigationArrowP2>().airStrikeState)
@@ -71,6 +55,55 @@ public class TroopControllerP2 : MonoBehaviour {
             m_currentSelectionCircle.transform.position = m_generals[index].transform.position;
     }
 
+    void CheckGeneralState(bool increase, bool decrease)
+    {
+        if (m_generals[index].rankState == TroopActor.RankState.dead)
+        {
+            if (increase)
+            {
+                index++;
+
+                if (index >= m_generals.Count)
+                    index = 0;
+
+                CheckGeneralState(true, false);
+            }
+            if (decrease)
+            {
+                if (index <= 0)
+                    index = m_generals.Count;
+
+                index--;
+
+                CheckGeneralState(false, true);
+            }
+        }
+        else
+        {
+            if (increase)
+            {
+                index++;
+
+                if (index >= m_generals.Count)
+                    index = 0;
+
+                FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
+
+                m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
+            }
+            if (decrease)
+            {
+                if (index <= 0)
+                    index = m_generals.Count;
+
+                index--;
+
+                FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
+
+                m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
+            }
+        }
+    }
 
     public void AddGeneral(TroopActor troop)
     {
