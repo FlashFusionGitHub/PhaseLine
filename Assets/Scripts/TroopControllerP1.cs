@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TroopControllerP1 : MonoBehaviour {
 
-    public List<TroopActor> m_generals = new List<TroopActor>();
+    public List<TroopActor> m_generals;
     int index = 0;
 
     [Header("Selection Circle")]

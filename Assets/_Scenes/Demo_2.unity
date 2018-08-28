@@ -3487,6 +3487,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114877045712860092, guid: 35409ae43d7cbe148b244eb0242a8c56,
+        type: 2}
+      propertyPath: m_troopControllerP1
+      value: 
+      objectReference: {fileID: 2017101287}
+    - target: {fileID: 114877045712860092, guid: 35409ae43d7cbe148b244eb0242a8c56,
+        type: 2}
+      propertyPath: m_troopControllerP2
+      value: 
+      objectReference: {fileID: 1247276655}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35409ae43d7cbe148b244eb0242a8c56, type: 2}
   m_IsPrefabParent: 0

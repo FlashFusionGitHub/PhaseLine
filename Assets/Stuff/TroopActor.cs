@@ -197,7 +197,7 @@ public class TroopActor : MonoBehaviour {
                 AssignToGeneral(ClosestGeneral());
             if (killMeAfter <= 0)
             {
-                Die();
+                Die(this);
             }
             else
             {
@@ -520,23 +520,30 @@ public class TroopActor : MonoBehaviour {
         currentHealth -= damageToTake;
         if (currentHealth <= 0)
         {
-            Die();
+            Die(this);
         }
 
         m_healthBar.fillAmount = currentHealth / maxHealth;
     }
-    void Die()
+    public void Die(TroopActor ta)
     {
-        onDie.Invoke();
-        if (rankState == RankState.IsGeneral)
+        ta.onDie.Invoke();
+        if (ta.rankState == RankState.IsGeneral)
         {
             if (ClosestAlly())
-            PromoteToGeneral(ClosestAlly());
-            rankState = RankState.dead;
+            ta.PromoteToGeneral(ClosestAlly());
+            ta.rankState = RankState.dead;
             if (moveTarget)
             Destroy(moveTarget.gameObject);
         }
-        rankState = RankState.dead;
+        ta.rankState = RankState.dead;
+
+        if (ta.team == Team.TEAM1)
+            FindObjectOfType<TroopControllerP1>().RemoveGenereal(ta);
+
+        if (ta.team == Team.TEAM2)
+            FindObjectOfType<TroopControllerP2>().RemoveGenereal(ta);
+
         gameObject.SetActive(false);
     }
     private void OnDrawGizmosSelected()
@@ -585,5 +592,11 @@ public class TroopActor : MonoBehaviour {
         ta.OnBecomeGeneral.Invoke();
         ta.rankState = RankState.IsGeneral;
         ta.moveTarget = null;
+
+        if (ta.team == Team.TEAM1)
+            FindObjectOfType<TroopControllerP1>().AddGeneral(ta);
+
+        if (ta.team == Team.TEAM2)
+            FindObjectOfType<TroopControllerP2>().AddGeneral(ta);
     }
 }
