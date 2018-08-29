@@ -17,6 +17,7 @@ public class TroopControllerP1 : MonoBehaviour {
     // Use this for initialization
     void Start () {
         m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[0].transform.position, Quaternion.Euler(-90, 0, 0));
+        FindObjectOfType<CameraControllerP1>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
     }
 
     // Update is called once per frame
