@@ -1,0 +1,89 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using InControl;
+
+public enum Team { NONE, TEAM1, TEAM2 };
+
+public class NavigationArrowActor : MonoBehaviour {
+
+    public TroopActor m_tank;
+    public GameObject m_airStrikeMarker;
+    public GameObject m_navMarker;
+    public GameObject m_airStrike;
+
+    public float m_minXPos = -100, maxXPos = 100;
+    public float m_minZPos = -100, maxZPos = 100;
+
+    public float m_markerSpeed = 2;
+
+    public Team m_team;
+
+    public GameObject m_currentMarker;
+
+    public bool m_airStrikeState;
+
+    protected InputDevice m_controller;
+
+	// Use this for initialization
+	protected virtual void Start () {
+        m_currentMarker = Instantiate(m_navMarker, new Vector3(0, 4, 0), Quaternion.identity);
+    }
+
+    // Update is called once per frame
+    protected virtual void Update () {
+
+        float markerXPos = Mathf.Clamp(m_currentMarker.transform.position.x, m_minXPos, maxXPos);
+        float markerZPos = Mathf.Clamp(m_currentMarker.transform.position.z, m_minZPos, maxZPos);
+
+        m_currentMarker.transform.position = new Vector3(markerXPos, m_currentMarker.transform.position.y, markerZPos);
+
+        m_currentMarker.transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) * m_markerSpeed;
+
+        AirStrikeControls();
+
+    }
+
+    public void AirStrikeControls()
+    {
+        if (m_controller.Action3.WasPressed && !m_airStrikeState)
+        {
+            EnableAirStrikeMarker();
+        }
+        else if (m_controller.Action3.WasPressed && m_airStrikeState)
+        {
+            EnableNavigationMarker();
+        }
+
+        if (m_airStrikeState && m_controller.Action1.WasPressed)
+        {
+            Instantiate(m_airStrike, m_currentMarker.transform.position, m_currentMarker.transform.rotation);
+            EnableNavigationMarker();
+        }
+    }
+
+    void EnableAirStrikeMarker()
+    {
+        m_airStrikeState = true;
+        GameObject prevMarker = m_currentMarker;
+        m_currentMarker = Instantiate(m_airStrikeMarker, new Vector3(prevMarker.transform.position.x, 1, prevMarker.transform.position.z), Quaternion.identity);
+        Destroy(prevMarker);
+    }
+
+    void EnableNavigationMarker()
+    {
+        m_airStrikeState = false;
+        GameObject prevMarker = m_currentMarker;
+        m_currentMarker = Instantiate(m_navMarker, new Vector3(prevMarker.transform.position.x, 4, prevMarker.transform.position.z), Quaternion.identity);
+        Destroy(prevMarker);
+    }
+
+    public TroopActor GetEnemyToAttack()
+    {
+        if (m_tank != null)
+            return m_tank;
+        else
+            return null;
+    }
+
+}

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InControl;
 
-public class TroopControllerP2 : MonoBehaviour {
+public class TroopController : MonoBehaviour {
 
-    public List<TroopActor> m_generals = new List<TroopActor>();
+    public List<TroopActor> m_generals;
     int index = 0;
 
     [Header("Selection Circle")]
@@ -14,21 +15,21 @@ public class TroopControllerP2 : MonoBehaviour {
 
     List<CaptureZoneActor> zonesCaptured;
 
-    // Use this for initialization
-    void Start()
-    {
-        m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[0].transform.position, Quaternion.Euler(-90, 0, 0));
-        FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
+    protected InputDevice m_controller;
+    protected NavigationArrowActor m_navigationArrowActor;
 
+    public CameraController cameraController;
+
+    // Use this for initialization
+    protected virtual void Start () {
+        m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[0].transform.position, Quaternion.Euler(-90, 0, 0));
+        cameraController.MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A) && m_generals.Count > 0)
-        {
-            foreach(TroopActor gen in m_generals.ToArray())
-            {
+    protected virtual void Update () {
+        if (Input.GetKeyDown(KeyCode.A) && m_generals.Count > 0) {
+            foreach (TroopActor gen in m_generals.ToArray()) {
                 gen.Die(gen);
             }
 
@@ -38,8 +39,7 @@ public class TroopControllerP2 : MonoBehaviour {
         if (m_generals.Count == 0)
             Destroy(m_currentSelectionCircle);
 
-        if (FindObjectOfType<Controllers>().m_controller2.DPadLeft.WasPressed && m_generals.Count > 1)
-        {
+        if (m_controller.DPadLeft.WasPressed && m_generals.Count > 1) {
             //destory the currect circle
             if (m_currentSelectionCircle != null)
                 Destroy(m_currentSelectionCircle);
@@ -47,8 +47,7 @@ public class TroopControllerP2 : MonoBehaviour {
             CheckGeneralState(false, true);
         }
 
-        if (FindObjectOfType<Controllers>().m_controller2.DPadRight.WasPressed && m_generals.Count > 1)
-        {
+        if (m_controller.DPadRight.WasPressed && m_generals.Count > 1) {
             //destory the currect circle
             if (m_currentSelectionCircle != null)
                 Destroy(m_currentSelectionCircle);
@@ -56,48 +55,41 @@ public class TroopControllerP2 : MonoBehaviour {
             CheckGeneralState(true, false);
         }
 
-        if (FindObjectOfType<Controllers>().m_controller2.Action1.WasPressed && !FindObjectOfType<NavigationArrowP2>().airStrikeState)
-        {
-            m_generals[index].moveTarget.transform.position = FindObjectOfType<NavigationArrowP2>().currentMarker.transform.position;
-        }
+        if (m_controller.Action1.WasPressed && !m_navigationArrowActor.m_airStrikeState)
+            m_generals[index].moveTarget.transform.position = m_navigationArrowActor.m_currentMarker.transform.position;
 
         if (m_currentSelectionCircle != null && index >= 0 && m_generals.Count > 0)
             m_currentSelectionCircle.transform.position = m_generals[index].transform.position;
     }
 
-    void CheckGeneralState(bool increase, bool decrease)
-    {
-        if (increase)
-        {
+    void CheckGeneralState(bool increase, bool decrease) {
+        if (increase) {
             index++;
 
             if (index >= m_generals.Count)
                 index = 0;
 
-            FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
+            cameraController.MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
 
             m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
         }
-        if (decrease)
-        {
+        if (decrease) {
             if (index <= 0)
                 index = m_generals.Count;
 
             index--;
 
-            FindObjectOfType<CameraControllerP2>().MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
+            cameraController.MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
 
             m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
         }
     }
 
-    public void AddGeneral(TroopActor troop)
-    {
+    public void AddGeneral(TroopActor troop) {
         m_generals.Add(troop);
     }
 
-    public void RemoveGenereal(TroopActor troop)
-    {
+    public void RemoveGenereal(TroopActor troop) {
         m_generals.Remove(troop);
     }
 }
