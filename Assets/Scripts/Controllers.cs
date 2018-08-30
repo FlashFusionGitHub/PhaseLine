@@ -5,7 +5,6 @@ using InControl;
 
 public class Controllers : MonoBehaviour
 {
-
     public InputDevice m_controller1;
     public InputDevice m_controller2;
 	

@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/_Scenes/POC Map.unity
-    guid: d24963c84aab74d4681561289c59a311
   - enabled: 1
-    path: Assets/_Scenes/Demo.unity
-    guid: 85f40e7527d3b674180938117c565993
+    path: Assets/_Scenes/Menu.unity
+    guid: cf65885248fe0af4c94dbd6ddaffb8f4
+  - enabled: 1
+    path: Assets/_Scenes/Demo_2.unity
+    guid: 1d5ea1a53eae40f40a8a4ac7fe43cfed
