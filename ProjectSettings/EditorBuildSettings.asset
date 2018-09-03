@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Demo_2.unity
     guid: 1d5ea1a53eae40f40a8a4ac7fe43cfed
+  - enabled: 1
+    path: Assets/_Scenes/Network-Lobby.unity
+    guid: 119fc86ea0336b041a6866e889ca8ac1
