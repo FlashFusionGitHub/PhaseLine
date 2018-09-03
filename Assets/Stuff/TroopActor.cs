@@ -484,10 +484,12 @@ public class TroopActor : MonoBehaviour {
             return true;
         }
     }
+    public Vector3 previousPos;
     void LookAtMoveTarget()
     {
         if (moveTarget && moving)
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation((moveTarget.position - transform.position).normalized), turnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation((transform.position - previousPos).normalized), turnSpeed * Time.deltaTime);
+        previousPos = transform.position;
 
         transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
     }

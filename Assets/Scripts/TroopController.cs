@@ -16,9 +16,12 @@ public class TroopController : MonoBehaviour {
     List<CaptureZoneActor> zonesCaptured;
 
     protected InputDevice m_controller;
-    protected NavigationArrowActor m_navigationArrowActor;
+
+    public NavigationArrowActor m_navigationArrowActor;
 
     public CameraController cameraController;
+
+    public int playerIndex;
 
     // Use this for initialization
     protected virtual void Start () {
@@ -28,12 +31,13 @@ public class TroopController : MonoBehaviour {
 
     // Update is called once per frame
     protected virtual void Update () {
+
+        m_controller = InputManager.Devices[playerIndex];
+
         if (Input.GetKeyDown(KeyCode.A) && m_generals.Count > 0) {
             foreach (TroopActor gen in m_generals.ToArray()) {
                 gen.Die(gen);
             }
-
-            Debug.Log(m_generals.Count);
         }
 
         if (m_generals.Count == 0)

@@ -11,8 +11,8 @@ public class ObjectPool : MonoBehaviour {
     public List<TroopActor> team1Troops = new List<TroopActor>();
     public List<TroopActor> team2Troops = new List<TroopActor>();
 
-    public TroopControllerP1 m_troopControllerP1;
-    public TroopControllerP2 m_troopControllerP2;
+    public List<TroopActor> team1Generals = new List<TroopActor>();
+    public List<TroopActor> team2Generals = new List<TroopActor>();
 
     // Use this for initialization
     void Start () {
@@ -32,19 +32,19 @@ public class ObjectPool : MonoBehaviour {
 
     void AddGeneralsToList()
     {
-        m_troopControllerP1.m_generals.Clear();
-        m_troopControllerP2.m_generals.Clear();
+        team1Generals.Clear();
+        team2Generals.Clear();
 
         foreach (TroopActor troop in allTroopActors)
         {
             if (troop.team == Team.TEAM1 && troop.rankState == TroopActor.RankState.IsGeneral)
             {
-                m_troopControllerP1.AddGeneral(troop);
+                team2Generals.Add(troop);
             }
 
             if (troop.team == Team.TEAM2 && troop.rankState == TroopActor.RankState.IsGeneral)
             {
-                m_troopControllerP2.AddGeneral(troop);
+                team2Generals.Add(troop);
             }
         }
     }

@@ -25,13 +25,35 @@ public class NavigationArrowActor : MonoBehaviour {
 
     protected InputDevice m_controller;
 
-	// Use this for initialization
-	protected virtual void Start () {
+    public int playerIndex;
+
+    public int airStrikes;
+
+    // Use this for initialization
+    protected virtual void Start () {
         m_currentMarker = Instantiate(m_navMarker, new Vector3(0, 4, 0), Quaternion.identity);
     }
 
     // Update is called once per frame
     protected virtual void Update () {
+        m_controller= InputManager.Devices[playerIndex];
+
+
+        foreach (CaptureZoneActor zone in FindObjectOfType<ZoneController>().zones)
+        {
+            if (zone.owner == CaptureZoneActor.Owner.TEAM1)
+            {
+                airStrikes++;
+            }
+        }
+
+        foreach (CaptureZoneActor zone in FindObjectOfType<ZoneController>().zones)
+        {
+            if (zone.owner == CaptureZoneActor.Owner.TEAM2)
+            {
+                airStrikes++;
+            }
+        }
 
         float markerXPos = Mathf.Clamp(m_currentMarker.transform.position.x, m_minXPos, maxXPos);
         float markerZPos = Mathf.Clamp(m_currentMarker.transform.position.z, m_minZPos, maxZPos);
@@ -86,4 +108,19 @@ public class NavigationArrowActor : MonoBehaviour {
             return null;
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+       // if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
+       // {
+       //     m_tank = other.GetComponent<TroopActor>();
+       // }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+       // if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
+        //{
+        //    m_tank = other.GetComponent<TroopActor>();
+       // }
+    }
 }
