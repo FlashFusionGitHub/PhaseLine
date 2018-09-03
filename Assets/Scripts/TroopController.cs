@@ -32,8 +32,6 @@ public class TroopController : MonoBehaviour {
             foreach (TroopActor gen in m_generals.ToArray()) {
                 gen.Die(gen);
             }
-
-            Debug.Log(m_generals.Count);
         }
 
         if (m_generals.Count == 0)

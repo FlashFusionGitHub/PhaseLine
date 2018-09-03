@@ -4,18 +4,55 @@ using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class Commentator : MonoBehaviour {
+    [System.Serializable]
+    public enum ReactionType
+    {
+        Event,
+        Idol
+    }
+    [System.Serializable]
+    public enum ReactionCatagory
+    {
+        Victory,
+        Positive,
+        Nuetral,
+        Negative,
+        AFK,
+        Defeat
+    }
+    [System.Serializable]
+    public enum SpeakingState
+    {
+        Idol,
+        IdolSpeaking,
+        Speaking,
+    }
 
     [System.Serializable]
     public class VoiceLine
     {
-        [TextArea]
-        public string subtitles = "-Insert-Subtitles-Here-";
+        [HideInInspector]
+        public bool tried;
+        [HideInInspector]
+        public string VoiceLineName;
+        public ReactionType reactionType;
+        public ReactionCatagory reactionCatagory;
+        public Txt text;
         public Audio audio;
-        public SpriteSheet spriteSheet;
+        public Animation spriteSheet;
 
     }
     [System.Serializable]
-    public class SpriteSheet
+    public class Txt
+    {
+        [TextArea]
+        public string subtitles = "-Insert-Subtitles-Here-";
+        public float subtitleDisplayTime;
+        public float subtitleTimer;
+        public bool subtitlesFinished;
+    }
+    [System.Serializable]
+    public class Animation
     {
         public Sprite[] sprites;
         public int index = 0;
@@ -31,14 +68,17 @@ public class Commentator : MonoBehaviour {
         public bool audioFinished = false;
     }
 
-    public VoiceLine[] positiveReactions;
-    public VoiceLine[] negativeReactions;
+    [Header("Reactions")]
+    public SpeakingState speakingState;
     public VoiceLine currentReaction;
-    public VoiceLine[] passiveReactions;
-    public float timeUntilPassiveReaction;
-    public float passiveReactionTimer;
-    public bool reacting;
+    public VoiceLine[] reactions;
 
+    [Header("Boredum Level")]
+    public ReactionCatagory idolState;
+    public float timeUntilNextBoredumLevel;
+    public float boredumLevelTimer;
+
+    [Header("UI")]
     public Text subtitleField;
     public Image portrait;
 
@@ -46,51 +86,128 @@ public class Commentator : MonoBehaviour {
 
     private void Start()
     {
+        attempts = reactions.Length;
         audioSource = GetComponent<AudioSource>();
     }
     public void ReactPositively()
     {
-        if (!reacting)
-        ChooseAReaction(positiveReactions);
+        if (speakingState != SpeakingState.Speaking)
+        {
+            ChooseAReaction(ReactionType.Event, ReactionCatagory.Positive);
+            idolState = ReactionCatagory.Positive;
+        }
     }
 
     public void ReactNegatively()
     {
-        if (!reacting)
-        ChooseAReaction(negativeReactions);
+        if (speakingState != SpeakingState.Speaking)
+        {
+            ChooseAReaction(ReactionType.Event, ReactionCatagory.Negative);
+            idolState = ReactionCatagory.Negative;
+        }
     }
-
-    void ChooseAReaction(VoiceLine[] vls)
+    int attempts;
+    void ChooseAReaction(ReactionType rt, ReactionCatagory rc)
     {
-        currentReaction = vls[Random.Range(0, vls.Length)];
-        passiveReactionTimer = timeUntilPassiveReaction;
-        reacting = true;
+        currentReaction = reactions[Random.Range(0, reactions.Length)];
+        if ((currentReaction.reactionType != rt || currentReaction.reactionCatagory != rc) && attempts >= 0)
+        {
+            if (!currentReaction.tried)
+            {
+                currentReaction.tried = true;
+                attempts--;
+            }
+            ChooseAReaction(rt, rc);
+            return;
+        }
+        else if (attempts <= 0)
+        {
+            if (reactions.Length > 0)
+            currentReaction = reactions[0];
+        }
+        attempts = reactions.Length;
+        foreach (VoiceLine vl in reactions)
+        {
+            vl.tried = false;
+        }
+        boredumLevelTimer = (rt == ReactionType.Event) ? timeUntilNextBoredumLevel: boredumLevelTimer;
+        currentReaction.spriteSheet.animationFinished = false;
+        currentReaction.spriteSheet.index = 0;
+        currentReaction.audio.audioStarted = false;
+        currentReaction.audio.audioFinished = false;
+        currentReaction.text.subtitlesFinished = false;
+        currentReaction.text.subtitleTimer = 0;
+        speakingState = (rt == ReactionType.Event) ? SpeakingState.Speaking : SpeakingState.IdolSpeaking;
     }
 
     private void Update()
     {
-        if (reacting && currentReaction != null)
+        if (currentReaction == null)
+        {
+            speakingState = SpeakingState.Idol;
+        }
+        if (speakingState == SpeakingState.Idol)
+        {
+            ChooseAReaction(ReactionType.Idol, idolState);
+        }
+
+
+        if ((speakingState != SpeakingState.Idol) && currentReaction != null)
         {
             PlayAudio();
             CycleSpriteSheet();
             DisplaySubtitles();
             CheckFinished();
         }
-        else if (currentReaction == null)
+
+        if (speakingState != SpeakingState.Speaking)
         {
-            reacting = false;
-        }
-        else if (!reacting)
-        {
-            if (passiveReactionTimer < 0)
+            if (boredumLevelTimer < 0)
             {
-                ChooseAReaction(passiveReactions);
+                NextIdolState();
+                attempts = reactions.Length;
+                ChooseAReaction(ReactionType.Idol, idolState);
             }
             else
             {
-                passiveReactionTimer -= Time.deltaTime;
+                boredumLevelTimer -= Time.deltaTime;
             }
         }
+    }
+    void NextIdolState()
+    {
+        if (idolState == ReactionCatagory.Positive)
+        {
+            idolState = ReactionCatagory.Nuetral;
+        }
+        else if (idolState == ReactionCatagory.Nuetral)
+        {
+            idolState = ReactionCatagory.Negative;
+        }
+        else if (idolState == ReactionCatagory.Negative)
+        {
+            idolState = ReactionCatagory.AFK;
+        }
+        else if (idolState == ReactionCatagory.AFK)
+        {
+            idolState = ReactionCatagory.AFK;
+        }
+        else
+        {
+            idolState = ReactionCatagory.Nuetral;
+        }
+        boredumLevelTimer = timeUntilNextBoredumLevel;
+    }
+    bool isInList(VoiceLine[] list, VoiceLine checkThis)
+    {
+        foreach (VoiceLine vl in list)
+        {
+            if (checkThis == vl)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     void PlayAudio()
     {
@@ -116,25 +233,23 @@ public class Commentator : MonoBehaviour {
     }
     void DisplaySubtitles()
     {
-        if (subtitleField.text != currentReaction.subtitles)
-            subtitleField.text = currentReaction.subtitles;
-
-        if (currentReaction.audio.audioClip != null)
-        { 
-            if (currentReaction.audio.audioFinished)
-            {
-                subtitleField.text = "";
-            }
-        }
-        else if (currentReaction.spriteSheet.sprites.Length > 0)
+        if (!currentReaction.text.subtitlesFinished)
         {
-            if (currentReaction.spriteSheet.animationFinished)
-            subtitleField.text = "";
+            currentReaction.text.subtitleTimer += Time.deltaTime;
+            if (subtitleField.text != currentReaction.text.subtitles)
+                subtitleField.text = currentReaction.text.subtitles;
+            if (currentReaction.text.subtitleTimer > currentReaction.text.subtitleDisplayTime)
+            {
+                currentReaction.text.subtitlesFinished = true;
+            }
         }
     }
     void CycleSpriteSheet()
     {
-        portrait.sprite = currentReaction.spriteSheet.sprites[currentReaction.spriteSheet.index];
+        if (currentReaction.spriteSheet.sprites.Length > 0)
+        {
+            portrait.sprite = currentReaction.spriteSheet.sprites[currentReaction.spriteSheet.index];
+        }
         if (currentReaction.spriteSheet.cycleTimer <= 0 && !currentReaction.spriteSheet.animationFinished)
         {
             
@@ -156,13 +271,22 @@ public class Commentator : MonoBehaviour {
     }
     void CheckFinished()
     {
-        if (currentReaction.spriteSheet.animationFinished && currentReaction.audio.audioFinished)
+        if (currentReaction.spriteSheet.animationFinished && currentReaction.audio.audioFinished && currentReaction.text.subtitlesFinished)
         {
-            reacting = false;
-            currentReaction.spriteSheet.animationFinished = false;
-            currentReaction.spriteSheet.index = 0;
-
-            currentReaction.audio.audioFinished = false;
+            speakingState = SpeakingState.Idol;
         }
     }
+
+
+
+
+    //private void OnDrawGizmos()
+    //{
+    //    foreach (VoiceLine vl in reactions)
+    //    {
+     //       string vlName = (vl.text.subtitles.Length < 20) ? (vl.reactionType.ToString() + " " + vl.reactionCatagory.ToString() + " (" + vl.text.subtitles + ")") : (vl.reactionType.ToString() + " " + vl.reactionCatagory.ToString() + " (" + vl.text.subtitles.Substring(0, 20) + "...)");
+    //        if (vl.VoiceLineName != vlName)
+     //           vl.VoiceLineName = vlName;
+     //   }
+   // }
 }

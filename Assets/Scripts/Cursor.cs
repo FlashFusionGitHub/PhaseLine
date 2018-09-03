@@ -60,8 +60,6 @@ public class Cursor : MonoBehaviour
             {
                 ExecuteEvents.Execute(cur.gameObject, pointer, ExecuteEvents.pointerUpHandler);
             }
-
-            Debug.Log(cur.gameObject.name);
         }
     }
 }

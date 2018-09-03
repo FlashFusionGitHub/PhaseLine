@@ -132,15 +132,20 @@ public class CaptureZoneActor : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 
-        if(other.GetComponent<TroopActor>().team == Team.TEAM1)
+        if(other.GetComponent<Explosion>() == true)
+        {
+            return;
+        }
+
+        if (other.GetComponent<TroopActor>().team == Team.TEAM1)
         {
             op.team1Troops.Add(other.GetComponent<TroopActor>());
         }
-
-        if (other.GetComponent<TroopActor>().team == Team.TEAM2)
+        else if (other.GetComponent<TroopActor>().team == Team.TEAM2)
         {
             op.team2Troops.Add(other.GetComponent<TroopActor>());
         }
+
     }
 
     private void OnTriggerExit(Collider other) {

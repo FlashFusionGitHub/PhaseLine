@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33846971450822414}
   - component: {fileID: 136780036909932082}
   - component: {fileID: 23673338911318096}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nav Marker - Player 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
