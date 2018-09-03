@@ -81,7 +81,6 @@ public class Commentator : MonoBehaviour {
     [Header("UI")]
     public Text subtitleField;
     public Image portrait;
-
     AudioSource audioSource;
 
     private void Start()
@@ -237,7 +236,9 @@ public class Commentator : MonoBehaviour {
         {
             currentReaction.text.subtitleTimer += Time.deltaTime;
             if (subtitleField.text != currentReaction.text.subtitles)
+            {
                 subtitleField.text = currentReaction.text.subtitles;
+            }
             if (currentReaction.text.subtitleTimer > currentReaction.text.subtitleDisplayTime)
             {
                 currentReaction.text.subtitlesFinished = true;
@@ -273,6 +274,7 @@ public class Commentator : MonoBehaviour {
     {
         if (currentReaction.spriteSheet.animationFinished && currentReaction.audio.audioFinished && currentReaction.text.subtitlesFinished)
         {
+
             speakingState = SpeakingState.Idol;
         }
     }
