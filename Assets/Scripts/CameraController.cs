@@ -17,6 +17,8 @@ public class CameraController : MonoBehaviour {
 
     public InputDevice m_controller;
 
+    public int m_playerIndex;
+
     // Use this for initialization
     protected virtual void Start () {
 		
@@ -24,6 +26,8 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
+
+        m_controller = InputManager.Devices[m_playerIndex];
 
         if (!changePosition)
         {

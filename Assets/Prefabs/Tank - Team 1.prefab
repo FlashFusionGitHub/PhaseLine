@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 65562482143161622}
   - component: {fileID: 54474251153979764}
   m_Layer: 0
-  m_Name: Tank
+  m_Name: Tank - Team 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,15 +409,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1960921079898656}
-  m_LocalRotation: {x: -0, y: -0.38268423, z: -0, w: -0.9238792}
-  m_LocalPosition: {x: -411.6, y: 60.4, z: -355.7}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.913044, y: 1, z: -55.96046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4307755313181176}
   - {fileID: 224831178893242070}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -265.965, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4455267699302098
 Transform:
   m_ObjectHideFlags: 1
@@ -785,7 +785,7 @@ MonoBehaviour:
   team: 1
   strengths: 000000000100000002000000
   vulnerabilities: 000000000100000002000000
-  rankState: 0
+  rankState: 2
   myGeneral: {fileID: 0}
   placementDirection: 0
   numOfRows: 0
@@ -793,6 +793,9 @@ MonoBehaviour:
   positionOffset: {x: -24, y: 0, z: 0}
   distanceBetweenPoints: {x: 4, y: 16}
   formationPositions: []
+  oldPos: {fileID: 0}
+  pd: 0
+  count: 0
   rank: 0
   OnGainExperience:
     m_PersistentCalls:
@@ -937,12 +940,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ReactNegatively
-        m_Mode: 1
+      - m_Target: {fileID: 114827121442592324}
+        m_MethodName: turnOffObject
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1443011722339144}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1076,6 +1079,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
     barrelAimSpeed: 2
   op: {fileID: 0}
+  moveTargetPrefab: {fileID: 0}
   previousPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114227140155756344
 MonoBehaviour:
@@ -25460,6 +25464,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.5}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}

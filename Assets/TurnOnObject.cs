@@ -8,4 +8,9 @@ public class TurnOnObject : MonoBehaviour {
     {
         TurnThisOn.SetActive(true);
     }
+
+    public void turnOffObject(GameObject TurnThisOff)
+    {
+        TurnThisOff.SetActive(false);
+    }
 }

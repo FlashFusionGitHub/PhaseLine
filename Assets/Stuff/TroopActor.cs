@@ -85,6 +85,9 @@ public class TroopActor : MonoBehaviour {
     [SerializeField] private Vector3 positionOffset;
     [SerializeField] private Vector2 distanceBetweenPoints;
     [SerializeField] public List<FormationPosition> formationPositions = new List<FormationPosition>();
+    [SerializeField] private Transform oldPos;
+    [SerializeField] private PlacementDirection pd;
+    [SerializeField] private int count;
 
 
     [Header("Promotion Settings")]
@@ -116,6 +119,7 @@ public class TroopActor : MonoBehaviour {
     [SerializeField] private MovementTypes movementType;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float turnSpeed;
+    public GameObject moveTargetPrefab;
 
     [Header("Air Movement Settings")]
     [SerializeField] private float hoverHeight;
@@ -131,16 +135,16 @@ public class TroopActor : MonoBehaviour {
     [SerializeField] private GunSettings[] guns;
 
     [Header("Important Optimisation List")]
-    [SerializeField] private ObjectPool op;
-	
+    public ObjectPool op;
+
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                      / START FUNCTION BELOW \
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	void Start () {
+    void Start () {
 
+        op = FindObjectOfType<ObjectPool>();
         SetHealth(maxHealth);
         NameUnit();
-        op = FindObjectOfType<ObjectPool>();
 	}
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                                     \ START FUNCTION ABOVE /
@@ -255,13 +259,48 @@ public class TroopActor : MonoBehaviour {
 
     Vector3 NextFormPos()
     {
-        numOfRows = Mathf.Ceil((formationPositions.Count + 1) / maxNumOfColumns);
-        if (!moveTarget)
+        //making Sure Old Pos Exists and is parented correctly
+        if (!oldPos)
         {
-            CreateMoveTarget();
+            oldPos = new GameObject("oldPos " + gameObject.name).transform;
+            oldPos.parent = moveTarget;
+            oldPos.localPosition = Vector3.zero;
+            oldPos.localPosition -= new Vector3(0, 0, distanceBetweenPoints.y);
+            count = 0;
+            return oldPos.position;
         }
-        return moveTarget.position + new Vector3(((distanceBetweenPoints.x * (formationPositions.Count + 1) * maxNumOfColumns) - distanceBetweenPoints.x*numOfRows*maxNumOfColumns* maxNumOfColumns) + distanceBetweenPoints.x*maxNumOfColumns *maxNumOfColumns, 0, distanceBetweenPoints.y * numOfRows);
+        else if (oldPos.parent != moveTarget)
+        {
+            oldPos.parent = moveTarget;
+            oldPos.localPosition = Vector3.zero;
+            oldPos.localPosition -= new Vector3(0, 0, distanceBetweenPoints.y);
+            count = 0;
+            return oldPos.position;
+        }
+
+
+        if (count < maxNumOfColumns / 2)
+        {
+            count++;
+            oldPos.localPosition += (pd == PlacementDirection.right) ? new Vector3(distanceBetweenPoints.x, 0, 0) : new Vector3(-distanceBetweenPoints.x, 0, 0);
+
+        }
+        else
+        {
+            count = 0;
+            if (pd == PlacementDirection.left)
+                oldPos.localPosition -= new Vector3(0, 0, distanceBetweenPoints.y);
+
+
+            pd = (pd == PlacementDirection.right) ? PlacementDirection.left : PlacementDirection.right;
+            oldPos.localPosition = (pd == PlacementDirection.right) ? new Vector3(0, 0, oldPos.localPosition.z) : new Vector3(-distanceBetweenPoints.x, 0, oldPos.localPosition.z);
+
+
+        }
+
+        return oldPos.position;
     }
+
     void AttackClosestEnemy()
     {
         
@@ -453,13 +492,24 @@ public class TroopActor : MonoBehaviour {
             OnMove.Invoke();
         }
     }
+
     void CreateMoveTarget()
     {
-        GameObject killMePls = new GameObject("Kill me pls");
-        GameObject keepThisAlive = Instantiate(killMePls, transform.position, transform.rotation);
-        Destroy(killMePls);
-        keepThisAlive.name = gameObject.name + "'s MoveTarget";
-        moveTarget = keepThisAlive.transform;
+        if (!moveTargetPrefab)
+        {
+            GameObject killMePls = new GameObject("Kill me pls");
+            killMePls.name = gameObject.name + "'s MoveTarget";
+            killMePls.transform.position = transform.position;
+            killMePls.transform.rotation = transform.rotation;
+            moveTarget = killMePls.transform;
+        }
+        else
+        {
+            GameObject keepThisAlive = Instantiate(moveTargetPrefab, transform.position, transform.rotation);
+            keepThisAlive.name = gameObject.name + "'s MoveTarget";
+            moveTarget = keepThisAlive.transform;
+        }
+
     }
 
     bool ClearLineOfSight()
@@ -541,10 +591,10 @@ public class TroopActor : MonoBehaviour {
         ta.rankState = RankState.dead;
 
         if (ta.team == Team.TEAM1)
-			FindObjectOfType<TroopController>().RemoveGenereal(ta);
+            op.team1Generals.Remove(ta);
 
         if (ta.team == Team.TEAM2)
-			FindObjectOfType<TroopController>().RemoveGenereal(ta);
+            op.team2Generals.Remove(ta);
 
         gameObject.SetActive(false);
     }
@@ -596,9 +646,9 @@ public class TroopActor : MonoBehaviour {
         ta.moveTarget = null;
 
         if (ta.team == Team.TEAM1)
-			FindObjectOfType<TroopController>().AddGeneral(ta);
+            op.team1Generals.Add(ta);
 
         if (ta.team == Team.TEAM2)
-			FindObjectOfType<TroopController>().AddGeneral(ta);
+            op.team2Generals.Add(ta);
     }
 }

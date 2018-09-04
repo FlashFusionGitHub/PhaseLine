@@ -23,8 +23,16 @@ public class TroopController : MonoBehaviour {
 
     public int playerIndex;
 
+    public ObjectPool op;
+
     // Use this for initialization
     protected virtual void Start () {
+
+        if (playerIndex == 0)
+            m_generals = op.team1Generals;
+        if (playerIndex == 1)
+            m_generals = op.team2Generals;
+
         m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[0].transform.position, Quaternion.Euler(-90, 0, 0));
         cameraController.MoveCameraTo(m_generals[index].transform.position.x, m_generals[index].transform.position.z - 10);
     }
@@ -87,13 +95,5 @@ public class TroopController : MonoBehaviour {
 
             m_currentSelectionCircle = Instantiate(m_selectionCircle, m_generals[index].transform.position, Quaternion.Euler(-90, 0, 0));
         }
-    }
-
-    public void AddGeneral(TroopActor troop) {
-        m_generals.Add(troop);
-    }
-
-    public void RemoveGenereal(TroopActor troop) {
-        m_generals.Remove(troop);
     }
 }
