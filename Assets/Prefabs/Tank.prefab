@@ -785,7 +785,7 @@ MonoBehaviour:
   team: 1
   strengths: 000000000100000002000000
   vulnerabilities: 000000000100000002000000
-  rankState: 2
+  rankState: 0
   myGeneral: {fileID: 0}
   placementDirection: 0
   numOfRows: 0
@@ -864,7 +864,7 @@ MonoBehaviour:
   experienceRequiredForNextRank: 10
   currentExperience: 0
   percentageIncreasePerRank: 50
-  influenceRadius: 10
+  influenceRadius: 40
   unitName: 
   possibleNames:
   - baz
