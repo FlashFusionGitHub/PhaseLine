@@ -541,10 +541,10 @@ public class TroopActor : MonoBehaviour {
         ta.rankState = RankState.dead;
 
         if (ta.team == Team.TEAM1)
-            FindObjectOfType<TroopControllerP1>().RemoveGenereal(ta);
+			FindObjectOfType<TroopController>().RemoveGenereal(ta);
 
         if (ta.team == Team.TEAM2)
-            FindObjectOfType<TroopControllerP2>().RemoveGenereal(ta);
+			FindObjectOfType<TroopController>().RemoveGenereal(ta);
 
         gameObject.SetActive(false);
     }
@@ -596,9 +596,9 @@ public class TroopActor : MonoBehaviour {
         ta.moveTarget = null;
 
         if (ta.team == Team.TEAM1)
-            FindObjectOfType<TroopControllerP1>().AddGeneral(ta);
+			FindObjectOfType<TroopController>().AddGeneral(ta);
 
         if (ta.team == Team.TEAM2)
-            FindObjectOfType<TroopControllerP2>().AddGeneral(ta);
+			FindObjectOfType<TroopController>().AddGeneral(ta);
     }
 }

@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 114786800826531560}
   - component: {fileID: 65039702569535262}
   - component: {fileID: 54685811575243750}
+  - component: {fileID: 195663767134906512}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -339,22 +340,22 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666493473404332}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: 31.080002, y: 1.1610241, z: 40.889996}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.9411781, z: -0, w: 0.33791116}
+  m_LocalPosition: {x: 417.4705, y: 60, z: 340.88455}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 4085616138615360}
   - {fileID: 224903613287911862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -360, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -500.501, z: 0}
 --- !u!4 &4156000487954318
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1687081902637328}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.06801716, y: 0, z: 0, w: 0.9976842}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -438,7 +439,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016677251320534}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.62683326, z: 0, w: 0.7791534}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -703,7 +704,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -865,8 +866,8 @@ MonoBehaviour:
   placementDirection: 0
   numOfRows: 0
   maxNumOfColumns: 3
-  positionOffset: {x: -6, y: 0, z: 0}
-  distanceBetweenPoints: {x: 1, y: 4}
+  positionOffset: {x: -24, y: 0, z: 0}
+  distanceBetweenPoints: {x: 4, y: 16}
   formationPositions: []
   rank: 0
   OnGainExperience:
@@ -929,7 +930,7 @@ MonoBehaviour:
   currentExperience: 0
   percentageIncreasePerRank: 50
   influenceRadius: 10
-  unitName: 
+  unitName: Steve
   possibleNames:
   - baz
   - Greg
@@ -957,7 +958,7 @@ MonoBehaviour:
   - Tim
   - Bazly
   maxHealth: 100
-  currentHealth: 100
+  currentHealth: 80
   onTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -1022,19 +1023,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   moveTarget: {fileID: 0}
   movementType: 1
-  moveSpeed: 5
-  turnSpeed: 3
+  moveSpeed: 10
+  turnSpeed: 6
   hoverHeight: 3
   verticleSpeed: 5
-  m_navAgent: {fileID: 0}
+  m_navAgent: {fileID: 195663767134906512}
   avoidanceRange: 2
   guns:
   - damage: 5
     TimeBetweenShots: 1.5
     m_gunTimerRandomiser: 0.1
-    m_gunTimer: 0
-    attackRangeMin: 2
-    attackRangeMax: 10
+    m_gunTimer: 0.5782705
+    attackRangeMin: 8
+    attackRangeMax: 40
     attackTarget: {fileID: 0}
     turret: {fileID: 4583082526719820}
     turretAimSpeed: 2
@@ -1106,6 +1107,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
     barrelAimSpeed: 2
   op: {fileID: 0}
+  previousPos: {x: 89.6, y: -42.544952, z: -36.79999}
 --- !u!114 &114786800826531560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1141,9 +1143,30 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.8
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!195 &195663767134906512
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666493473404332}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 6
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!198 &198273540320155848
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1204,7 +1227,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1925585587
+  randomSeed: 1990203353
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4610,7 +4633,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -510893383
+  randomSeed: -192162713
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11387,7 +11410,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -7913925
+  randomSeed: 1035997155
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14793,7 +14816,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1973437489
+  randomSeed: -264574543
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -21605,7 +21628,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -797426848
+  randomSeed: 1622933604
   InitialModule:
     serializedVersion: 3
     enabled: 1
