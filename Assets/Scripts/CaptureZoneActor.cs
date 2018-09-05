@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 
 public class CaptureZoneActor : MonoBehaviour {
@@ -10,15 +11,24 @@ public class CaptureZoneActor : MonoBehaviour {
     bool partialCaptureTeam1;
     bool partialCaptureTeam2;
 
-    public float capturePercentage;
-
+    [Header ("Owner")]
     public Owner owner;
 
+    [Header ("Capture timer")]
     public float captureTimer = 0;
     public float captureTime = 10;
+    public float capturePercentage;
 
+    [Header ("Object Pool")]
     private ObjectPool op;
 
+    [Header ("Capture Events Team 1")] // events for when team 1 starts capturing a zone
+    public UnityEvent onStartCaptureTeam1;
+    public UnityEvent onCaptureTeam1;
+
+    [Header ("Capture Events Team 2")] // events for when team 2 starts capturing a zone
+    public UnityEvent onStartCaptureTeam2;
+    public UnityEvent onCaptureTeam2;
     // Use this for initialization
     void Start () {
         op = FindObjectOfType<ObjectPool>();
@@ -29,13 +39,13 @@ public class CaptureZoneActor : MonoBehaviour {
 
         foreach (TroopActor tank in op.team1Troops)
         {
-            if(tank == null)
+            if(!tank.gameObject.activeInHierarchy || Vector3.Distance (transform.position, tank.transform.position) > transform.lossyScale.x) //changed from (!tank)
                 op.team1Troops.Remove(tank);
         }
 
         foreach (TroopActor tank in op.team2Troops.ToList())
         {
-            if(tank == null)
+            if(!tank.gameObject.activeInHierarchy || Vector3.Distance(transform.position, tank.transform.position) > transform.lossyScale.x) //changed from (!tank)
                 op.team2Troops.Remove(tank);
         }
 
@@ -57,6 +67,7 @@ public class CaptureZoneActor : MonoBehaviour {
 
                 if (captureTimer <= 0)
                 {
+                    onStartCaptureTeam1.Invoke(); //added event to plug in effects and sounds
                     partialCaptureTeam1 = true;
                     partialCaptureTeam2 = false;
                     capturePercentage += 10;
@@ -65,6 +76,7 @@ public class CaptureZoneActor : MonoBehaviour {
                     if (capturePercentage >= 100)
                     {
                         owner = Owner.TEAM1;
+                        onCaptureTeam1.Invoke(); //added event to plug in effects and sounds
                     }
                 }
             }
@@ -76,6 +88,7 @@ public class CaptureZoneActor : MonoBehaviour {
                 {
                     capturePercentage -= 10;
                     captureTimer = captureTime;
+                    onStartCaptureTeam1.Invoke(); //added event to plug in effects and sounds
                 }
             }
             else
@@ -97,6 +110,7 @@ public class CaptureZoneActor : MonoBehaviour {
 
                 if (captureTimer <= 0)
                 {
+                    onStartCaptureTeam2.Invoke(); //added event to plug in effects and sounds
                     partialCaptureTeam1 = false;
                     partialCaptureTeam2 = true;
                     capturePercentage += 10;
@@ -105,6 +119,7 @@ public class CaptureZoneActor : MonoBehaviour {
                     if (capturePercentage >= 100)
                     {
                         owner = Owner.TEAM2;
+                        onCaptureTeam2.Invoke(); //added Event to plug in effects and sounds
                     }
                 }
             }
@@ -116,6 +131,7 @@ public class CaptureZoneActor : MonoBehaviour {
                 {
                     capturePercentage -= 10;
                     captureTimer = captureTime;
+                    onStartCaptureTeam2.Invoke(); //added event to plug in effects and sounds
                 }
             }
             else
