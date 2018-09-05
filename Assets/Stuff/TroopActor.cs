@@ -120,6 +120,7 @@ public class TroopActor : MonoBehaviour {
     [SerializeField] private float moveSpeed;
     [SerializeField] private float turnSpeed;
     public GameObject moveTargetPrefab;
+    public GameObject generalMoveTargetPrefab;
 
     [Header("Air Movement Settings")]
     [SerializeField] private float hoverHeight;
@@ -493,9 +494,10 @@ public class TroopActor : MonoBehaviour {
         }
     }
 
+ 
     void CreateMoveTarget()
     {
-        if (!moveTargetPrefab)
+        if (!moveTargetPrefab && !generalMoveTargetPrefab)
         {
             GameObject killMePls = new GameObject("Kill me pls");
             killMePls.name = gameObject.name + "'s MoveTarget";
@@ -503,7 +505,13 @@ public class TroopActor : MonoBehaviour {
             killMePls.transform.rotation = transform.rotation;
             moveTarget = killMePls.transform;
         }
-        else
+        else if (generalMoveTargetPrefab)
+        {
+            GameObject keepThisAlive = Instantiate(generalMoveTargetPrefab, transform.position, transform.rotation);
+            keepThisAlive.name = gameObject.name + "'s MoveTarget";
+            moveTarget = keepThisAlive.transform;
+        }
+        else if (!generalMoveTargetPrefab && moveTargetPrefab)
         {
             GameObject keepThisAlive = Instantiate(moveTargetPrefab, transform.position, transform.rotation);
             keepThisAlive.name = gameObject.name + "'s MoveTarget";
