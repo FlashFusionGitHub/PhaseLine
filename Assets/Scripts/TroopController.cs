@@ -5,7 +5,6 @@ using InControl;
 
 public class TroopController : MonoBehaviour {
 
-    public List<TroopActor> m_generals;
     int index = 0;
 
     [Header("Selection Circle")]
@@ -24,6 +23,8 @@ public class TroopController : MonoBehaviour {
     public int playerIndex;
 
     public ObjectPool op;
+
+    public List<TroopActor> m_generals;
 
     // Use this for initialization
     protected virtual void Start () {
