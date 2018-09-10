@@ -17,8 +17,8 @@ public class HangerSpawner : MonoBehaviour {
     public class HangerDoorData
     {
         public Transform m_hangerDoor;
-        public Vector3 m_openPos;
-        public Vector3 m_closedPos;
+		public Transform m_openPos;
+		public Transform m_closedPos;
 
     }
 
@@ -108,7 +108,9 @@ public class HangerSpawner : MonoBehaviour {
     {
         foreach (HangerDoorData hangerDoor in m_hangerDoors)
         { 
-                hangerDoor.m_hangerDoor.localPosition = Vector3.Lerp(hangerDoor.m_closedPos, hangerDoor.m_openPos, progress);
+			hangerDoor.m_hangerDoor.localPosition = Vector3.Lerp(hangerDoor.m_closedPos.localPosition, hangerDoor.m_openPos.localPosition, progress);
+			hangerDoor.m_hangerDoor.localScale = Vector3.Lerp(hangerDoor.m_closedPos.localScale, hangerDoor.m_openPos.localScale, progress);
+			hangerDoor.m_hangerDoor.localEulerAngles = Vector3.Lerp(hangerDoor.m_closedPos.localEulerAngles, hangerDoor.m_openPos.localEulerAngles, progress);
         }
     }
 
