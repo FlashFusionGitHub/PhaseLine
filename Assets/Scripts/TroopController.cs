@@ -26,6 +26,8 @@ public class TroopController : MonoBehaviour {
 
     public List<TroopActor> m_generals;
 
+    public int tankSize;
+
     // Use this for initialization
     protected virtual void Start () {
 
@@ -69,7 +71,18 @@ public class TroopController : MonoBehaviour {
         }
 
         if (m_controller.Action1.WasPressed && !m_navigationArrowActor.m_airStrikeState)
+        {
+            foreach(TroopActor tank in m_generals)
+            {
+                if(Vector3.Distance(m_generals[index].moveTarget.transform.position, tank.transform.position) < tankSize)
+                {
+                    Debug.Log("Space Occupied");
+                    return;
+                }
+            }
+
             m_generals[index].moveTarget.transform.position = m_navigationArrowActor.m_currentMarker.transform.position;
+        }
 
         if (m_currentSelectionCircle != null && index >= 0 && m_generals.Count > 0)
             m_currentSelectionCircle.transform.position = m_generals[index].transform.position;
