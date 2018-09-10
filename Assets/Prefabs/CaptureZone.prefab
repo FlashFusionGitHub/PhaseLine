@@ -348,10 +348,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d16c8dd6fdca24faacc08b43822f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capturePercentage: 0
   owner: 0
   captureTimer: 0
   captureTime: 10
+  capturePercentage: 0
+  onStartCaptureTeam1:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onCaptureTeam1:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onStartCaptureTeam2:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onCaptureTeam2:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!135 &135374644084652688
 SphereCollider:
   m_ObjectHideFlags: 1

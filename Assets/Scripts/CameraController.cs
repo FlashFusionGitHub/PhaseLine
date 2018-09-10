@@ -19,6 +19,8 @@ public class CameraController : MonoBehaviour {
 
     public int m_playerIndex;
 
+	public float cameraSpeed;
+
     // Use this for initialization
     protected virtual void Start () {
 		
@@ -33,7 +35,7 @@ public class CameraController : MonoBehaviour {
         {
             if (m_controller.RightTrigger.IsPressed)
             {
-                transform.position += new Vector3(0, -m_controller.RightStickY, 0);
+				transform.position += new Vector3(0, -m_controller.RightStickY * cameraSpeed, 0);
 
                 float zoom = Mathf.Clamp(transform.position.y, m_MinZoom, m_MaxZoom);
 
@@ -41,7 +43,7 @@ public class CameraController : MonoBehaviour {
             }
             else
             {
-                this.transform.position += new Vector3(m_controller.RightStickX, 0, m_controller.RightStickY);
+				this.transform.position += new Vector3(m_controller.RightStickX  * cameraSpeed, 0, m_controller.RightStickY  * cameraSpeed);
 
                 float panX = Mathf.Clamp(transform.position.x, m_MinPanX, m_MaxPanX);
                 float panZ = Mathf.Clamp(transform.position.z, m_MinPanZ, m_MaxPanZ);
