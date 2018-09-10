@@ -986,7 +986,10 @@ MonoBehaviour:
   movementType: 1
   moveSpeed: 10
   turnSpeed: 6
-  moveTargetPrefab: {fileID: 0}
+  moveTargetPrefab: {fileID: 1011479146942100, guid: 59515b7655d6f9e44a8f06026d14ac32,
+    type: 2}
+  generalMoveTargetPrefab: {fileID: 1420119947695036, guid: fd78f79bfb5d53742882a2348c6df90e,
+    type: 2}
   hoverHeight: 3
   verticleSpeed: 5
   m_navAgent: {fileID: 0}
