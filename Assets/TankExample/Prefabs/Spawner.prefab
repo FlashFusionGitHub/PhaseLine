@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33378152266453484}
   - component: {fileID: 65528296199495146}
   - component: {fileID: 23696933524706486}
+  - component: {fileID: 114779115048577670}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -56,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1548337209378300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.3, y: -7, z: 313.9}
+  m_LocalPosition: {x: 412, y: 52.06, z: 415.5}
   m_LocalScale: {x: 13.732631, y: 13.732634, z: 13.732634}
   m_Children:
   - {fileID: 4949083317400758}
@@ -70,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1539687110993308}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8126627, z: -0.05607057}
+  m_LocalPosition: {x: -1.0461, y: 0.8126627, z: -0.6507}
   m_LocalScale: {x: 0.072819255, y: 0.07281924, z: 0.07281924}
   m_Children: []
   m_Father: {fileID: 4162546262365602}
@@ -90,7 +91,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d9ff3ba9637902b4580d911a96db1ec8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -216,8 +217,26 @@ MonoBehaviour:
   lastSpawnedObject: {fileID: 0}
   disBeforeNextSpawn: 15
   spawnWaiting: 0
-  m_hangerDoors: []
+  m_hangerDoors:
+  - m_hangerDoor: {fileID: 0}
+    m_openPos: {fileID: 0}
+    m_closedPos: {fileID: 0}
+  - m_hangerDoor: {fileID: 0}
+    m_openPos: {fileID: 0}
+    m_closedPos: {fileID: 0}
   doorState: 1
   m_doorOpenTime: 1
   m_doorCloseTime: 2
   objectPool: {fileID: 0}
+--- !u!114 &114779115048577670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1539687110993308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a637fbe790ace3e439e6a2e7928f93cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: {x: 0, y: -10, z: 5}

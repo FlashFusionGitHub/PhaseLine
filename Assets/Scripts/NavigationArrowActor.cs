@@ -5,7 +5,8 @@ using InControl;
 
 public enum Team { NONE, TEAM1, TEAM2 };
 
-public class NavigationArrowActor : MonoBehaviour {
+public class NavigationArrowActor : MonoBehaviour
+{
 
     public TroopActor m_tank;
     public GameObject m_airStrikeMarker;
@@ -29,14 +30,19 @@ public class NavigationArrowActor : MonoBehaviour {
 
     public int airStrikes;
 
+    public float floatValue = 1f;
+
+    public LayerMask terrainMask;
     // Use this for initialization
-    protected virtual void Start () {
+    protected virtual void Start()
+    {
         m_currentMarker = Instantiate(m_navMarker, new Vector3(0, 4, 0), Quaternion.identity);
     }
 
     // Update is called once per frame
-    protected virtual void Update () {
-        m_controller= InputManager.Devices[playerIndex];
+    protected virtual void Update()
+    {
+        m_controller = InputManager.Devices[playerIndex];
 
 
         foreach (CaptureZoneActor zone in FindObjectOfType<ZoneController>().zones)
@@ -60,7 +66,24 @@ public class NavigationArrowActor : MonoBehaviour {
 
         m_currentMarker.transform.position = new Vector3(markerXPos, m_currentMarker.transform.position.y, markerZPos);
 
-        m_currentMarker.transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) * m_markerSpeed;
+        var objPos = m_currentMarker.transform.position;
+
+        //For the Optional solution Delete from Here
+        RaycastHit hit;
+
+        if (Physics.Raycast(new Vector3(objPos.x, 500, objPos.z), Vector3.down, out hit, 800f, terrainMask))
+        {
+            Debug.DrawLine(new Vector3(objPos.x, 500, objPos.z), hit.point);
+            m_currentMarker.transform.Translate(0, (floatValue - hit.distance), 0);
+            m_currentMarker.transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) * m_markerSpeed;
+            m_currentMarker.transform.position = new Vector3(m_currentMarker.transform.position.x, hit.point.y, m_currentMarker.transform.position.z);
+        }
+        else
+        {
+            m_currentMarker.transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) * m_markerSpeed;
+        }
+        // hit.point = Vector3.zero;
+
 
         AirStrikeControls();
 
@@ -110,17 +133,17 @@ public class NavigationArrowActor : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-       // if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
-       // {
-       //     m_tank = other.GetComponent<TroopActor>();
-       // }
+        // if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
+        // {
+        //     m_tank = other.GetComponent<TroopActor>();
+        // }
     }
 
     void OnTriggerExit(Collider other)
     {
-       // if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
+        // if (other.gameObject.GetComponent<TroopActor>().team == Team.TEAM2)
         //{
         //    m_tank = other.GetComponent<TroopActor>();
-       // }
+        // }
     }
 }

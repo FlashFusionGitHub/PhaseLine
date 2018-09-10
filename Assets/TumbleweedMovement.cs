@@ -44,7 +44,7 @@ public class TumbleweedMovement : MonoBehaviour {
 			m_forceTimer -= Time.deltaTime;
 		}
 		velocityReader = rb.velocity;
-		Debug.Log ("TumbleWeed velocity = "+ currentVelocity);
+
 		if (Timer <= 0) {
 			Destroy (this.gameObject);
 		}

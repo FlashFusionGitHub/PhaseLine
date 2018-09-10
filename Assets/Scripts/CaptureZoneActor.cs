@@ -148,32 +148,41 @@ public class CaptureZoneActor : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
 
-        if(other.GetComponent<Explosion>() == true)
+        TroopActor currentActor = other.GetComponent<TroopActor>();
+        if (currentActor)
         {
-            return;
-        }
+           // if (other.GetComponent<Explosion>() == true)
+           // {
+           //     return;
+           // }
 
-        if (other.GetComponent<TroopActor>().team == Team.TEAM1)
-        {
-            op.team1Troops.Add(other.GetComponent<TroopActor>());
-        }
-        else if (other.GetComponent<TroopActor>().team == Team.TEAM2)
-        {
-            op.team2Troops.Add(other.GetComponent<TroopActor>());
+            if (other.GetComponent<TroopActor>().team == Team.TEAM1)
+            {
+                op.team1Troops.Add(other.GetComponent<TroopActor>());
+            }
+            else if (other.GetComponent<TroopActor>().team == Team.TEAM2)
+            {
+                op.team2Troops.Add(other.GetComponent<TroopActor>());
+            }
         }
 
     }
 
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other)
+    {
 
-        if (other.GetComponent<TroopActor>().team == Team.TEAM1)
+        TroopActor currentActor = other.GetComponent<TroopActor>();
+        if (currentActor)
         {
-            op.team1Troops.Remove(other.GetComponent<TroopActor>());
-        }
+            if (other.GetComponent<TroopActor>().team == Team.TEAM1)
+            {
+                op.team1Troops.Remove(other.GetComponent<TroopActor>());
+            }
 
-        if (other.GetComponent<TroopActor>().team == Team.TEAM2)
-        {
-            op.team2Troops.Remove(other.GetComponent<TroopActor>());
+            if (other.GetComponent<TroopActor>().team == Team.TEAM2)
+            {
+                op.team2Troops.Remove(other.GetComponent<TroopActor>());
+            }
         }
     }
 }
