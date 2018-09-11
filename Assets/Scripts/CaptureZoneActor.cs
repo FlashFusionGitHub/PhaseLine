@@ -19,9 +19,6 @@ public class CaptureZoneActor : MonoBehaviour {
     public float captureTime = 10;
     public float capturePercentage;
 
-    [Header ("Object Pool")]
-    private ObjectPool op;
-
     [Header ("Capture Events Team 1")] // events for when team 1 starts capturing a zone
     public UnityEvent onStartCaptureTeam1;
     public UnityEvent onCaptureTeam1;
@@ -29,15 +26,18 @@ public class CaptureZoneActor : MonoBehaviour {
     [Header ("Capture Events Team 2")] // events for when team 2 starts capturing a zone
     public UnityEvent onStartCaptureTeam2;
     public UnityEvent onCaptureTeam2;
+
+    public List<TroopActor> team1unitsInZone;
+    public List<TroopActor> team2unitsInZone;
+
     // Use this for initialization
     void Start () {
-        op = FindObjectOfType<ObjectPool>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        foreach (TroopActor tank in op.team1Troops)
+        /*foreach (TroopActor tank in op.team1Troops.ToList())
         {
             if(!tank.gameObject.activeInHierarchy || Vector3.Distance (transform.position, tank.transform.position) > transform.lossyScale.x) //changed from (!tank)
                 op.team1Troops.Remove(tank);
@@ -47,14 +47,14 @@ public class CaptureZoneActor : MonoBehaviour {
         {
             if(!tank.gameObject.activeInHierarchy || Vector3.Distance(transform.position, tank.transform.position) > transform.lossyScale.x) //changed from (!tank)
                 op.team2Troops.Remove(tank);
-        }
+        }*/
 
         if (capturePercentage == 0)
         {
             owner = Owner.NONE;
         }
 
-        if(op.team1Troops.Count > 0 && op.team2Troops.Count == 0)
+        if(team1unitsInZone.Count > 0 && team2unitsInZone.Count == 0)
         {
             if (partialCaptureTeam2)
             {
@@ -97,7 +97,7 @@ public class CaptureZoneActor : MonoBehaviour {
             }
         }
 
-        if (op.team2Troops.Count > 0 && op.team1Troops.Count == 0)
+        if (team2unitsInZone.Count > 0 && team1unitsInZone.Count == 0)
         {
             if (partialCaptureTeam1)
             {
@@ -140,7 +140,7 @@ public class CaptureZoneActor : MonoBehaviour {
             }
         }
 
-        if(op.team1Troops.Count == 0 && op.team2Troops.Count == 0 && owner == Owner.NONE)
+        if(team1unitsInZone.Count == 0 && team2unitsInZone.Count == 0 && owner == Owner.NONE)
         {
             capturePercentage = 0;
         }
@@ -149,20 +149,16 @@ public class CaptureZoneActor : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 
         TroopActor currentActor = other.GetComponent<TroopActor>();
+
         if (currentActor)
         {
-           // if (other.GetComponent<Explosion>() == true)
-           // {
-           //     return;
-           // }
-
             if (other.GetComponent<TroopActor>().team == Team.TEAM1)
             {
-                op.team1Troops.Add(other.GetComponent<TroopActor>());
+                team1unitsInZone.Add(other.GetComponent<TroopActor>());
             }
             else if (other.GetComponent<TroopActor>().team == Team.TEAM2)
             {
-                op.team2Troops.Add(other.GetComponent<TroopActor>());
+                team2unitsInZone.Add(other.GetComponent<TroopActor>());
             }
         }
 
@@ -176,12 +172,13 @@ public class CaptureZoneActor : MonoBehaviour {
         {
             if (other.GetComponent<TroopActor>().team == Team.TEAM1)
             {
-                op.team1Troops.Remove(other.GetComponent<TroopActor>());
+                team1unitsInZone.Remove(other.GetComponent<TroopActor>());
+                Debug.Log(other.gameObject.name);
             }
 
             if (other.GetComponent<TroopActor>().team == Team.TEAM2)
             {
-                op.team2Troops.Remove(other.GetComponent<TroopActor>());
+                team2unitsInZone.Remove(other.GetComponent<TroopActor>());
             }
         }
     }
