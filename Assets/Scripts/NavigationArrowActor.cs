@@ -7,7 +7,6 @@ public enum Team { NONE, TEAM1, TEAM2 };
 
 public class NavigationArrowActor : MonoBehaviour
 {
-
     public TroopActor m_tank;
     public GameObject m_airStrikeMarker;
     public GameObject m_navMarker;
@@ -28,11 +27,12 @@ public class NavigationArrowActor : MonoBehaviour
 
     public int playerIndex;
 
-    public int airStrikes;
+    public int AirStrikeCount;
 
     public float floatValue = 1f;
 
     public LayerMask terrainMask;
+
     // Use this for initialization
     protected virtual void Start()
     {
@@ -42,24 +42,10 @@ public class NavigationArrowActor : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+
+        Debug.Log(AirStrikeCount);
+
         m_controller = InputManager.Devices[playerIndex];
-
-
-        foreach (CaptureZoneActor zone in FindObjectOfType<ZoneController>().zones)
-        {
-            if (zone.owner == CaptureZoneActor.Owner.TEAM1)
-            {
-                airStrikes++;
-            }
-        }
-
-        foreach (CaptureZoneActor zone in FindObjectOfType<ZoneController>().zones)
-        {
-            if (zone.owner == CaptureZoneActor.Owner.TEAM2)
-            {
-                airStrikes++;
-            }
-        }
 
         float markerXPos = Mathf.Clamp(m_currentMarker.transform.position.x, m_minXPos, maxXPos);
         float markerZPos = Mathf.Clamp(m_currentMarker.transform.position.z, m_minZPos, maxZPos);
@@ -82,8 +68,6 @@ public class NavigationArrowActor : MonoBehaviour
         {
             m_currentMarker.transform.position += new Vector3(m_controller.LeftStickX, 0, m_controller.LeftStickY) * m_markerSpeed;
         }
-        // hit.point = Vector3.zero;
-
 
         AirStrikeControls();
 
@@ -91,7 +75,7 @@ public class NavigationArrowActor : MonoBehaviour
 
     public void AirStrikeControls()
     {
-        if (m_controller.Action3.WasPressed && !m_airStrikeState)
+        if (m_controller.Action3.WasPressed && !m_airStrikeState && AirStrikeCount > 0)
         {
             EnableAirStrikeMarker();
         }
@@ -102,6 +86,7 @@ public class NavigationArrowActor : MonoBehaviour
 
         if (m_airStrikeState && m_controller.Action1.WasPressed)
         {
+            AirStrikeCount--;
             Instantiate(m_airStrike, m_currentMarker.transform.position, m_currentMarker.transform.rotation);
             EnableNavigationMarker();
         }

@@ -30,24 +30,15 @@ public class CaptureZoneActor : MonoBehaviour {
     public List<TroopActor> team1unitsInZone;
     public List<TroopActor> team2unitsInZone;
 
+    public NavigationArrowActor team1;
+    public NavigationArrowActor team2;
+
     // Use this for initialization
     void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-        /*foreach (TroopActor tank in op.team1Troops.ToList())
-        {
-            if(!tank.gameObject.activeInHierarchy || Vector3.Distance (transform.position, tank.transform.position) > transform.lossyScale.x) //changed from (!tank)
-                op.team1Troops.Remove(tank);
-        }
-
-        foreach (TroopActor tank in op.team2Troops.ToList())
-        {
-            if(!tank.gameObject.activeInHierarchy || Vector3.Distance(transform.position, tank.transform.position) > transform.lossyScale.x) //changed from (!tank)
-                op.team2Troops.Remove(tank);
-        }*/
 
         if (capturePercentage == 0)
         {
@@ -76,6 +67,7 @@ public class CaptureZoneActor : MonoBehaviour {
                     if (capturePercentage >= 100)
                     {
                         owner = Owner.TEAM1;
+                        team1.AirStrikeCount++;
                         onCaptureTeam1.Invoke(); //added event to plug in effects and sounds
                     }
                 }
@@ -119,6 +111,7 @@ public class CaptureZoneActor : MonoBehaviour {
                     if (capturePercentage >= 100)
                     {
                         owner = Owner.TEAM2;
+                        team2.AirStrikeCount++;
                         onCaptureTeam2.Invoke(); //added Event to plug in effects and sounds
                     }
                 }

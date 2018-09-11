@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/_Scenes/Menu.unity
     guid: cf65885248fe0af4c94dbd6ddaffb8f4
   - enabled: 1
-    path: Assets/_Scenes/Demo_2.unity
-    guid: 1d5ea1a53eae40f40a8a4ac7fe43cfed
+    path: Assets/_Scenes/Desert-Canyon 1.unity
+    guid: 1ca198a9045aa5c4daf154e6bdaa23fb
   - enabled: 1
     path: Assets/_Scenes/Network-Lobby.unity
     guid: 119fc86ea0336b041a6866e889ca8ac1

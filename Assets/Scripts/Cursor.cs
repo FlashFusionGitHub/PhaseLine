@@ -15,10 +15,11 @@ public class Cursor : MonoBehaviour
 
     public GameObject cursor;
 
+    public float m_minX, m_maxX, m_minY, m_maxY;
+
     // Use this for initialization
     void Start ()
     {
-		
 	}
 	
 	// Update is called once per frame
@@ -28,8 +29,8 @@ public class Cursor : MonoBehaviour
 
         transform.position += new Vector3(m_controller.LeftStickX, m_controller.LeftStickY, 0) * 5;
 
-        float markerXPos = Mathf.Clamp(transform.position.x, 0, Screen.width);
-        float markerYPos = Mathf.Clamp(transform.position.y, 0, Screen.height);
+        float markerXPos = Mathf.Clamp(transform.position.x, m_minX, m_maxX);
+        float markerYPos = Mathf.Clamp(transform.position.y, m_minY, m_maxY);
 
         transform.position = new Vector3(markerXPos, markerYPos, 0);
 
